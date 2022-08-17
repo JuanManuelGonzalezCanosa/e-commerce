@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="orderDetails")
+@Table(name="OrderDetails")
 public class OrderDetails {
 
     @Id
@@ -18,7 +18,7 @@ public class OrderDetails {
     private long id;
 
     @OneToMany(cascade=CascadeType.ALL)
-    @Column(name = "order_ID", nullable = false)
+    @Column(name = "order_Id", nullable = false)
     private long orderId;
 
     @OneToMany(cascade=CascadeType.ALL)

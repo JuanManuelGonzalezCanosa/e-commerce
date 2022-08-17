@@ -31,7 +31,7 @@ public class Users {
     private String surName;
 
     @Column(name = "userMail", nullable = false)
-    private String userMaill;
+    private String userMail;
 
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "lastLogin", nullable = false)

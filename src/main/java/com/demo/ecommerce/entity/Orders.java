@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 @Entity
-@Table
+@Table (name="Orders")
 public class Orders {
 
     @Id
@@ -26,8 +26,8 @@ public class Orders {
     @Column(name = "productsCount", nullable = false)
     private int productsCount;
 
-    @Column(name = "priceDescount", nullable = false)
-    private long priceDescount;
+    @Column(name = "priceDiscount", nullable = false)
+    private long priceDiscount;
 
     @Column(name = "priceTax", nullable = false)
     private long priceTax;

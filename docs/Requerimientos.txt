@@ -1,0 +1,20 @@
+
+FECHA: 17/AGOSTO/2022
+
+1) Revisar que las propiedades no tengan errores gramaticales y respetar camelCase
+2) Implementar 2 metodos o (funciones) que devuelvan una lista de productos y otra que devuelva un producto por su Id
+2) Implementar 2 metodos o (funciones) que devuelvan una lista de categorias y otra que devuelva una categoria por su Id
+
+*** IMPLEMENTACION DE LOS METODOS O FUNCIONES ***
+
+Primero se implementa desde el servicio (ProductService & CategoryService)
+Luego  se utiliza ese servicio en (ProductController) y (CategoryController)
+
+
+Importante! Actualmente en los controladores hay que cambiarle el tipo de dato que devuelve ya que lo que esta
+es solo a modo de ejemplo.
+
+
+Para Finalizar correr la solucion y desde un postman comprobar que los endpoints (de los controllers) funcionan OK!
+
+
