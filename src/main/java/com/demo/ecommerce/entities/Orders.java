@@ -1,4 +1,4 @@
-package com.demo.ecommerce.entity;
+package com.demo.ecommerce.entities;
 
 
 import lombok.AllArgsConstructor;

@@ -1,7 +1,6 @@
-package com.demo.ecommerce.entity;
+package com.demo.ecommerce.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
