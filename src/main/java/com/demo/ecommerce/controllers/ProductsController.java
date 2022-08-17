@@ -13,9 +13,9 @@ public class ProductsController {
     private ProductService service;
 
     @RequestMapping("/product/all")
-    public List<Product> getsProducts(){
+    public List<Product> getProductAll(){
 
-        return service.getsProducts();
+        return service.getProductAll();
     }
 
     @RequestMapping("/product/{id}")

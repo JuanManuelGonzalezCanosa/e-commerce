@@ -11,7 +11,7 @@ public class CategoryService {
 
     private ICategoryRepository repository;
 
-    public List<Category> getsCatrgory (){
+    public List<Category> getCategoryAll (){
 
         return repository.findAll();
     }

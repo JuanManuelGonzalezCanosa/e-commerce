@@ -13,9 +13,9 @@ public class CategoryController {
     private CategoryService service;
 
     @RequestMapping("/category/all")
-    public List<Category> getsCategory(){
+    public List<Category> getCategoryAll(){
 
-        return service.getsCatrgory();
+        return service.getCategoryAll();
     }
 
     @RequestMapping("/category/{id}")

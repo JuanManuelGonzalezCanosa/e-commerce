@@ -11,7 +11,9 @@ public class ProductService {
     private IProductsRepository repository;
 
 
-    public List<Product> getsProducts (){
+    public List<Product> getProductAll (){
+
+
         return repository.findAll();
     }
 
