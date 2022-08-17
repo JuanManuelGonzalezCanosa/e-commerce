@@ -20,7 +20,7 @@ public class Orders {
     private long id;
 
     @ManyToOne(cascade=CascadeType.ALL)
-    @Column(name = "user_Id", nullable = false)
+    @Column(name = "userId", nullable = false)
     private long userId;
 
     @Column(name = "productsCount", nullable = false)

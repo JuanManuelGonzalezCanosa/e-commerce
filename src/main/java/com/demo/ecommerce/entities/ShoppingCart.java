@@ -20,11 +20,11 @@ public class ShoppingCart {
     private long id;
 
     @OneToOne(cascade=CascadeType.ALL)
-    @Column(name = "user_Id", nullable = false)
+    @Column(name = "userId", nullable = false)
     private long userId;
 
     @OneToMany(cascade=CascadeType.ALL)
-    @Column(name = "product_Id", nullable = false)
+    @Column(name = "productId", nullable = false)
     private List<Product> productId;
 
 }

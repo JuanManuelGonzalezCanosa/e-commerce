@@ -18,18 +18,18 @@ public class OrderDetails {
     private long id;
 
     @OneToMany(cascade=CascadeType.ALL)
-    @Column(name = "order_Id", nullable = false)
+    @Column(name = "orderId", nullable = false)
     private long orderId;
 
     @OneToMany(cascade=CascadeType.ALL)
-    @Column(name = "product_Id", nullable = false)
+    @Column(name = "productId", nullable = false)
     private long productId;
 
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
     @Column(name = "unitPrice", nullable = false)
-    private long unirPrice;
+    private long unitPrice;
 
     @Column(name = "totalPrice", nullable = false)
     private long totalPrice;
