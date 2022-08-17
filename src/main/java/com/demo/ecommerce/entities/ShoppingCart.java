@@ -19,12 +19,15 @@ public class ShoppingCart {
     @Column(name = "id", nullable = false)
     private long id;
 
-    @OneToOne(cascade=CascadeType.ALL)
-    @Column(name = "userId", nullable = false)
-    private long userId;
 
     @OneToMany(cascade=CascadeType.ALL)
     @Column(name = "productId", nullable = false)
     private List<Product> productId;
+
+    @Transient
+    private Double total;
+
+    @Transient
+    private String status;
 
 }

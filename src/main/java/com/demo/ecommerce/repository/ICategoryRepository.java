@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository("categoryRepository")
 public interface ICategoryRepository extends JpaRepository<Category, Integer> {
+    findLastUpdate();
 }

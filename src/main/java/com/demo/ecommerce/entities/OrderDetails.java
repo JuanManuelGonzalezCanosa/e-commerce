@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,16 +15,17 @@ import javax.persistence.*;
 public class OrderDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private long id;
 
     @OneToMany(cascade=CascadeType.ALL)
     @Column(name = "orderId", nullable = false)
-    private long orderId;
+    private List<Orders> orders;
 
     @OneToMany(cascade=CascadeType.ALL)
     @Column(name = "productId", nullable = false)
-    private long productId;
+    private List<Orders> prodcutos;
 
     @Column(name = "quantity", nullable = false)
     private int quantity;
