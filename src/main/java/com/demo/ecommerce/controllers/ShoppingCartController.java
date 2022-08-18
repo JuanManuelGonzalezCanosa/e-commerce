@@ -20,11 +20,11 @@ public class ShoppingCartController {
         return null;
     }
 
-    @PostMapping("/addShoppingCart")
-    public ShoppingCart saveShopingCart(@RequestBody ShoppingCart shoppingCart){
+    //@PostMapping("/addShoppingCart")
+    //public ShoppingCart saveShopingCart(@RequestBody ShoppingCart shoppingCart){
 
-        return service.saveToCart(shoppingCart);
-    }
+      //  return service.saveToCart(shoppingCart);
+    //}
 
 
 }

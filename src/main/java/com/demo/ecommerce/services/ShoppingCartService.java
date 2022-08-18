@@ -14,11 +14,12 @@ import java.util.List;
 public class ShoppingCartService{
 
     @Autowired
+    @Qualifier("IShoppingCartRepository")
     private IShoppingCartRepository repository;
 
-    public ShoppingCart saveToCart(ShoppingCart shoppingCart) {
-        return repository.save(shoppingCart);
-    }
+    //public ShoppingCart saveToCart(ShoppingCart shoppingCart) {
+      //  return repository.save(shoppingCart);
+    //}
 
     public ShoppingCart addProduct(List<Product> product, Integer id) {
 
@@ -26,7 +27,7 @@ public class ShoppingCartService{
         //cheque si tiene descuento y restar 10% al total.
 
         // isEnabled(product)
-        // isPromotion(product)
+        // isPromotion(product)/
 
         ShoppingCart aux = repository.findById(id).get();
 
