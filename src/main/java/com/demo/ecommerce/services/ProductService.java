@@ -6,10 +6,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service("productService")
-public class ProductService {
+public class ProductService{
 
     private IProductsRepository repository;
 
+    public Product saveProduct(Product product){
+
+        return repository.saveProduct(product);
+    }
 
     public List<Product> getProductAll (){
 
