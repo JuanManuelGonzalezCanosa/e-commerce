@@ -22,7 +22,7 @@ public class ShoppingCart {
 
     @OneToMany(cascade=CascadeType.ALL)
     @Column(name = "productId", nullable = false)
-    private List<Product> productId;
+    private List<Product> lstProduct;
 
     @Transient
     private Double total;
