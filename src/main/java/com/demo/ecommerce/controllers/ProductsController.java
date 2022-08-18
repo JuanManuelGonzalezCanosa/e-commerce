@@ -2,34 +2,31 @@ package com.demo.ecommerce.controllers;
 
 import com.demo.ecommerce.entities.Product;
 import com.demo.ecommerce.services.ProductService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
 @RestController
-public class ProductsController {
-
-
+public class ProductsController{
+    @Autowired
     private ProductService service;
 
-    public Product saveProduct(@RequestBody Product product){
-
-        return service.saveProduct(product);
+    @PostMapping("/createProduct")
+    public Product createProduct(@RequestBody Product product){
+        return service.createProduct(product);
     }
 
-    @RequestMapping("/product/all")
-    public List<Product> getProductAll(){
-
-        return service.getProductAll();
+    @GetMapping("/product/all")
+    public List<Product> lstProduct(){
+        return service.lstProduct();
     }
 
-    @RequestMapping("/product/{id}")
-    public Product getProductsById(@RequestParam int id){
-
-        return service.getProductsById(id);
+    @GetMapping("/product/{id}")
+    public Product getProductById(@PathVariable Integer id){
+        System.out.println(id);
+        return service.getProductById(id);
     }
+
 }

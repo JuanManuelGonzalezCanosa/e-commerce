@@ -17,9 +17,17 @@ public class ShoppingCartService{
     @Qualifier("IShoppingCartRepository")
     private IShoppingCartRepository repository;
 
-    //public ShoppingCart saveToCart(ShoppingCart shoppingCart) {
-      //  return repository.save(shoppingCart);
-    //}
+    public ShoppingCart createToCart(ShoppingCart shoppingCart) {
+        return repository.save(shoppingCart);
+    }
+
+    public List<ShoppingCart> lstShoppingCart(){
+        return repository.findAll();
+    }
+
+    public ShoppingCart getShoppingCartById(Integer id){
+        return repository.findById(id).get();
+    }
 
     public ShoppingCart addProduct(List<Product> product, Integer id) {
 

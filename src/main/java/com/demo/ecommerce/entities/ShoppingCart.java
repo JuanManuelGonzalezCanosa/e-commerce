@@ -16,18 +16,17 @@ import java.util.List;
 public class ShoppingCart {
 
     @Id
-    @Column(name = "id", nullable = false)
-    private long id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @OneToMany(cascade=CascadeType.ALL)
-    @Column(name = "productId", nullable = false)
+    @Column(name = "lstProduct", nullable = true)
     private List<Product> lstProduct;
 
-    @Transient
+    @Column(name = "total", nullable = true)
     private Double total;
 
-    @Transient
-    private String status;
+    @Column(name = "status", nullable = true)
+    private boolean status;
 
 }

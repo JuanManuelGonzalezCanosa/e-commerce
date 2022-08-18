@@ -13,20 +13,15 @@ public class ProductService{
     @Autowired
     private IProductsRepository repository;
 
-    public Product saveProduct(Product product){
-
-
+    public Product createProduct(Product product){
         return repository.save(product);
     }
 
-    public List<Product> getProductAll (){
-
-
+    public List<Product> lstProduct (){
         return repository.findAll();
     }
 
-    public Product getProductsById (Integer id){
-
+    public Product getProductById (Integer id){
         return repository.findById(id).get();
     }
 

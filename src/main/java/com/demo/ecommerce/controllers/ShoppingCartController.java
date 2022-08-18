@@ -2,29 +2,30 @@ package com.demo.ecommerce.controllers;
 
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.services.ShoppingCartService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class ShoppingCartController {
 
+    @Autowired
     private ShoppingCartService service;
 
-    @GetMapping("/shoppingCartAll")
-    public List<ShoppingCart> getShoppingCartAll(){
-
-        return null;
+    @PostMapping("/createShoppingCart")
+    public ShoppingCart saveShopingCart(@RequestBody ShoppingCart shoppingCart){
+        return service.createToCart(shoppingCart);
     }
 
-    //@PostMapping("/addShoppingCart")
-    //public ShoppingCart saveShopingCart(@RequestBody ShoppingCart shoppingCart){
+    @GetMapping("/shoppingCart/all")
+    public List<ShoppingCart> lstShoppingCart(){
+        return service.lstShoppingCart();
+    }
 
-      //  return service.saveToCart(shoppingCart);
-    //}
-
+    @GetMapping("/shoppingCart/{id}")
+    public ShoppingCart getShoppingCartById(@PathVariable Integer id){
+        return service.getShoppingCartById(id);
+    }
 
 }
