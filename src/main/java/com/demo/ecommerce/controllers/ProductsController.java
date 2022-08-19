@@ -5,7 +5,7 @@ import com.demo.ecommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -19,7 +19,7 @@ public class ProductsController{
     }
 
     @GetMapping("/product/all")
-    public List<Product> lstProduct(){
+    public Set<Product> lstProduct(){
         return service.lstProduct();
     }
 

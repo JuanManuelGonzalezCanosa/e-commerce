@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +22,7 @@ public class ShoppingCart {
 
     @OneToMany(cascade=CascadeType.ALL)
     @Column(name = "lstProduct", nullable = true)
-    private List<Product> lstProduct;
+    private Set<Product> lstProduct;
 
     @Column(name = "total", nullable = true)
     private Double total;

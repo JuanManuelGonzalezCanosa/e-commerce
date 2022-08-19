@@ -22,15 +22,9 @@ public class ShoppingCartService{
     @Qualifier("IProductsRepository")
     private IProductsRepository repositoryProduct;
 
-    public ShoppingCart createToCart(ShoppingCart shoppingCart) {
+    public ShoppingCart createToCart(ShoppingCart shoppingCart) {return repository.save(shoppingCart);}
 
-        return repository.save(shoppingCart);
-    }
-
-    public List<ShoppingCart> lstShoppingCart(){
-
-        return repository.findAll();
-    }
+    public List<ShoppingCart> lstShoppingCart(){return repository.findAll();}
 
     public ShoppingCart getShoppingCartById(Integer id){
         return repository.findById(id).get();
@@ -45,6 +39,7 @@ public class ShoppingCartService{
        // if(!auxProduct.isEnabled()){
          //   throw new Exception("Is not enabled");
         //}
+
         //HAY STOCK?
         if(auxProduct.getStock() < quantityOfProducts){
             throw new Exception("no stock");
@@ -54,10 +49,11 @@ public class ShoppingCartService{
                     auxProduct.setPrice((long) (0.90 * auxProduct.getPrice()));
                     }
         }
+
         //LE DESCUENTO LO QUE COMPRO AL STOCK
         // repositoryProduct.findById(idProduct).get().setStock(auxProduct.getStock() - quantityOfProducts);
 
-        //AGREGO EL PRODUCTO A AL CARRITO(donde esta la lista de todos los productos)
+        //AGREGO EL PRODUCTO A AL CARRITO(donde esta la lista de todos los productos) Y SUMO EL TOTAL
         auxShoppingCart.getLstProduct().add(auxProduct);
         auxShoppingCart.setTotal((double) (quantityOfProducts * auxProduct.getPrice()));
 
