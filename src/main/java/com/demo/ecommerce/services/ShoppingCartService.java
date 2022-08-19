@@ -42,9 +42,9 @@ public class ShoppingCartService{
         Product auxProduct = repositoryProduct.findById(idProduct).get();
 
         // ESTA ACTIVO?
-        if(!auxProduct.isEnabled()){
-            throw new Exception("Is not enabled");
-        }
+       // if(!auxProduct.isEnabled()){
+         //   throw new Exception("Is not enabled");
+        //}
         //HAY STOCK?
         if(auxProduct.getStock() < quantityOfProducts){
             throw new Exception("no stock");
@@ -54,15 +54,12 @@ public class ShoppingCartService{
                     auxProduct.setPrice((long) (0.90 * auxProduct.getPrice()));
                     }
         }
-        //LE CAMBIO LA ID PARA QUE NO SEA REPETIDA AL SER EL MISMO PRODUCTO
-        auxProduct.setId(10000 + auxProduct.getId());
         //LE DESCUENTO LO QUE COMPRO AL STOCK
-        repositoryProduct.findById(idProduct).get().setStock(auxProduct.getStock() - quantityOfProducts);
-        //LE PONGO LA CANTIDAD DE PRODUCTOS QUE COMPRO
-        auxProduct.setStock(quantityOfProducts);
+        // repositoryProduct.findById(idProduct).get().setStock(auxProduct.getStock() - quantityOfProducts);
 
         //AGREGO EL PRODUCTO A AL CARRITO(donde esta la lista de todos los productos)
         auxShoppingCart.getLstProduct().add(auxProduct);
+        auxShoppingCart.setTotal((double) (quantityOfProducts * auxProduct.getPrice()));
 
         //RETORNO EL CARRITO CON EL PRODUCTO GUARDADO
         return repository.save(auxShoppingCart);
