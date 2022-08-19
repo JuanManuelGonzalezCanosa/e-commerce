@@ -1,0 +1,16 @@
+Creacion del Producto: 
+{
+    "name": "Pepino",
+    "description" : "Verdura",
+    "stock" : 100,
+    "photoURL" : "asdasd",
+    "price" : 320,
+    "isEnabled" : true,
+    "isPromotion" : true
+}
+
+Creacion del ShoppingCart:
+{
+    "lstProduct": null,
+    "status" : false
+}

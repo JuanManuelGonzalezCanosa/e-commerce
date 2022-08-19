@@ -1,5 +1,6 @@
 package com.demo.ecommerce.controllers;
 
+import com.demo.ecommerce.entities.Product;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.services.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class ShoppingCartController {
     private ShoppingCartService service;
 
     @PostMapping("/createShoppingCart")
-    public ShoppingCart saveShopingCart(@RequestBody ShoppingCart shoppingCart){
+    public ShoppingCart createToCart(@RequestBody ShoppingCart shoppingCart){
         return service.createToCart(shoppingCart);
     }
 
@@ -26,6 +27,15 @@ public class ShoppingCartController {
     @GetMapping("/shoppingCart/{id}")
     public ShoppingCart getShoppingCartById(@PathVariable Integer id){
         return service.getShoppingCartById(id);
+    }
+
+    @PostMapping("/addProductToShoppingCart/{id}")
+    public ShoppingCart addProductToShoppingCart(@PathVariable Integer idProduct,@PathVariable int quantityOfProducts, @PathVariable Integer id){
+        try {
+            return service.addProductToShoppingCart(idProduct, quantityOfProducts, id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

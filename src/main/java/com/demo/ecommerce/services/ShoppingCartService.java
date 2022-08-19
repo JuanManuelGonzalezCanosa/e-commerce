@@ -2,10 +2,12 @@ package com.demo.ecommerce.services;
 
 import com.demo.ecommerce.entities.Product;
 import com.demo.ecommerce.entities.ShoppingCart;
+import com.demo.ecommerce.repository.IProductsRepository;
 import com.demo.ecommerce.repository.IShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -16,12 +18,17 @@ public class ShoppingCartService{
     @Autowired
     @Qualifier("IShoppingCartRepository")
     private IShoppingCartRepository repository;
+    @Autowired
+    @Qualifier("IProductsRepository")
+    private IProductsRepository repositoryProduct;
 
     public ShoppingCart createToCart(ShoppingCart shoppingCart) {
+
         return repository.save(shoppingCart);
     }
 
     public List<ShoppingCart> lstShoppingCart(){
+
         return repository.findAll();
     }
 
@@ -29,18 +36,35 @@ public class ShoppingCartService{
         return repository.findById(id).get();
     }
 
-    public ShoppingCart addProduct(List<Product> product, Integer id) {
+    public ShoppingCart addProductToShoppingCart(Integer idProduct, int quantityOfProducts, Integer id) throws Exception{
+        //CREO AUXILIARES DE CARRITO Y PRODUCTO
+        ShoppingCart auxShoppingCart = repository.findById(id).get();
+        Product auxProduct = repositoryProduct.findById(idProduct).get();
 
-        //chequear si esta activo.
-        //cheque si tiene descuento y restar 10% al total.
+        // ESTA ACTIVO?
+        if(!auxProduct.isEnabled()){
+            throw new Exception("Is not enabled");
+        }
+        //HAY STOCK?
+        if(auxProduct.getStock() < quantityOfProducts){
+            throw new Exception("no stock");
+            }else {
+                //TIENE DESCUENTO?
+                if(auxProduct.isPromotion()){
+                    auxProduct.setPrice((long) (0.90 * auxProduct.getPrice()));
+                    }
+        }
+        //LE CAMBIO LA ID PARA QUE NO SEA REPETIDA AL SER EL MISMO PRODUCTO
+        auxProduct.setId(10000 + auxProduct.getId());
+        //LE DESCUENTO LO QUE COMPRO AL STOCK
+        repositoryProduct.findById(idProduct).get().setStock(auxProduct.getStock() - quantityOfProducts);
+        //LE PONGO LA CANTIDAD DE PRODUCTOS QUE COMPRO
+        auxProduct.setStock(quantityOfProducts);
 
-        // isEnabled(product)
-        // isPromotion(product)/
+        //AGREGO EL PRODUCTO A AL CARRITO(donde esta la lista de todos los productos)
+        auxShoppingCart.getLstProduct().add(auxProduct);
 
-        ShoppingCart aux = repository.findById(id).get();
-
-        aux.getLstProduct().addAll(product);
-
-        return repository.save(aux);
+        //RETORNO EL CARRITO CON EL PRODUCTO GUARDADO
+        return repository.save(auxShoppingCart);
     }
 }
