@@ -22,12 +22,14 @@ public class ShoppingCart {
 
     @OneToMany(cascade=CascadeType.ALL)
     @Column(name = "lstProduct", nullable = true)
-    private Set<Product> lstProduct;
+    private List<OrderItem> lstProduct;
 
     @Column(name = "total", nullable = true)
     private Double total;
 
     @Column(name = "status", nullable = true)
     private boolean status;
+
+
 
 }

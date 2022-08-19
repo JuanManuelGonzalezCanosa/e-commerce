@@ -1,11 +1,8 @@
 package com.demo.ecommerce.controllers;
 
-import com.demo.ecommerce.entities.Product;
-import com.demo.ecommerce.entities.RequestProducts;
+import com.demo.ecommerce.entities.OrderItem;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.services.ShoppingCartService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,10 +31,10 @@ public class ShoppingCartController {
 
 
     @PostMapping("/addProductToShoppingCart/{id}")
-    public ShoppingCart addProductToShoppingCart(@RequestBody RequestProducts requestProducts, @PathVariable Integer id){
+    public ShoppingCart addProductToShoppingCart(@RequestBody OrderItem orderItem, @PathVariable Integer id){
 
         try {
-            return service.addProductToShoppingCart(requestProducts.idProduct, requestProducts.quantityOfProducts, id);
+            return service.addProductToShoppingCart(orderItem, id);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

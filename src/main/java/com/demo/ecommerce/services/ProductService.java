@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service("productService")
@@ -18,8 +19,8 @@ public class ProductService{
         return repository.save(product);
     }
 
-    public Set<Product> lstProduct (){
-        return (Set<Product>) repository.findAll();
+    public List<Product> lstProduct (){
+        return repository.findAll();
     }
 
     public Product getProductById (Integer id){

@@ -29,13 +29,13 @@ public class Product {
     private String photoURL;
 
     @Column(name = "price", nullable = false)
-    private long price;
+    private double price;
 
-    @Column(name = "isEnabled", nullable = false)
-    private boolean isEnabled;
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
 
-    @Column(name = "isPromotion", nullable = false)
-    private boolean isPromotion;
+    @Column(name = "promotion", nullable = false)
+    private boolean promotion;
 
 
 

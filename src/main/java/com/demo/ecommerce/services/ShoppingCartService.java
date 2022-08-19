@@ -1,13 +1,13 @@
 package com.demo.ecommerce.services;
 
-import com.demo.ecommerce.entities.Product;
+import com.demo.ecommerce.entities.OrderItem;
 import com.demo.ecommerce.entities.ShoppingCart;
+import com.demo.ecommerce.repository.IOrderItemRepository;
 import com.demo.ecommerce.repository.IProductsRepository;
 import com.demo.ecommerce.repository.IShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -22,6 +22,10 @@ public class ShoppingCartService{
     @Qualifier("IProductsRepository")
     private IProductsRepository repositoryProduct;
 
+    @Autowired
+    @Qualifier("IOrderItemRepository")
+    private IOrderItemRepository repositoryIOrderItem;
+
     public ShoppingCart createToCart(ShoppingCart shoppingCart) {return repository.save(shoppingCart);}
 
     public List<ShoppingCart> lstShoppingCart(){return repository.findAll();}
@@ -30,32 +34,31 @@ public class ShoppingCartService{
         return repository.findById(id).get();
     }
 
-    public ShoppingCart addProductToShoppingCart(Integer idProduct, int quantityOfProducts, Integer id) throws Exception{
+    public ShoppingCart addProductToShoppingCart(OrderItem orderItem, Integer id) throws Exception{
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
         ShoppingCart auxShoppingCart = repository.findById(id).get();
-        Product auxProduct = repositoryProduct.findById(idProduct).get();
 
         // ESTA ACTIVO?
-       // if(!auxProduct.isEnabled()){
-         //   throw new Exception("Is not enabled");
-        //}
+        if(!orderItem.getItem().isEnabled()){
+            throw new Exception("Is not enabled");
+        }
 
         //HAY STOCK?
-        if(auxProduct.getStock() < quantityOfProducts){
+        if(orderItem.getItem().getStock() < orderItem.getQuantity()){
             throw new Exception("no stock");
             }else {
                 //TIENE DESCUENTO?
-                if(auxProduct.isPromotion()){
-                    auxProduct.setPrice((long) (0.90 * auxProduct.getPrice()));
+                if(orderItem.getItem().isPromotion()){
+                    orderItem.getItem().setPrice((long) (0.90 * orderItem.getItem().getPrice()));
                     }
         }
 
         //LE DESCUENTO LO QUE COMPRO AL STOCK
-        // repositoryProduct.findById(idProduct).get().setStock(auxProduct.getStock() - quantityOfProducts);
+        //repositoryProduct.findById(idProduct).get().setStock(auxProduct.getStock() - quantityOfProducts);
 
         //AGREGO EL PRODUCTO A AL CARRITO(donde esta la lista de todos los productos) Y SUMO EL TOTAL
-        auxShoppingCart.getLstProduct().add(auxProduct);
-        auxShoppingCart.setTotal((double) (quantityOfProducts * auxProduct.getPrice()));
+        auxShoppingCart.getLstProduct().add(orderItem);
+        auxShoppingCart.setTotal((double) (orderItem.getQuantity() * orderItem.getItem().getPrice()));
 
         //RETORNO EL CARRITO CON EL PRODUCTO GUARDADO
         return repository.save(auxShoppingCart);

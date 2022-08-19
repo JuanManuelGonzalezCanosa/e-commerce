@@ -1,11 +1,11 @@
-package com.demo.ecommerce.entities;
+package com.demo.ecommerce.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestProducts{
+public class RequestProductsDto {
 
     public Integer idProduct;
     public int quantityOfProducts;

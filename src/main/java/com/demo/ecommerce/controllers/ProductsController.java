@@ -3,8 +3,11 @@ package com.demo.ecommerce.controllers;
 import com.demo.ecommerce.entities.Product;
 import com.demo.ecommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -14,12 +17,17 @@ public class ProductsController{
     private ProductService service;
 
     @PostMapping("/createProduct")
-    public Product createProduct(@RequestBody Product product){
-        return service.createProduct(product);
+    public ResponseEntity<Product> createProduct(@RequestBody Product product){
+
+        try{
+            return new ResponseEntity<Product>(service.createProduct(product), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Product>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/product/all")
-    public Set<Product> lstProduct(){
+    public List<Product> lstProduct(){
         return service.lstProduct();
     }
 
