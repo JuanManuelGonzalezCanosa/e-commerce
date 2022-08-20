@@ -7,10 +7,11 @@ import lombok.Data;
 @Data
 public class OrderItemDto {
 
-    public Integer id;
+    public Integer idProduct;
     public String name;
     public String description;
     public double price;
+    public int quantity;
     public boolean promotion;
 
 }

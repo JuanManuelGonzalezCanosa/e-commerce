@@ -18,11 +18,11 @@ public class ShoppingCart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idShoppingCart;
 
     @OneToMany(cascade=CascadeType.ALL)
     @Column(name = "lstProduct", nullable = true)
-    private List<OrderItem> lstProduct;
+    private List<OrderItem> lstOrderItem;
 
     @Column(name = "total", nullable = true)
     private Double total;

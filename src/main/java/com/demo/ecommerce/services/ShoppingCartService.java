@@ -1,5 +1,7 @@
 package com.demo.ecommerce.services;
 
+import com.demo.ecommerce.dto.OrderItemDto;
+import com.demo.ecommerce.dto.ShoppingCartDto;
 import com.demo.ecommerce.entities.OrderItem;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.repository.IOrderItemRepository;
@@ -19,6 +21,9 @@ public class ShoppingCartService{
     @Qualifier("IShoppingCartRepository")
     private IShoppingCartRepository repository;
     @Autowired
+    @Qualifier("IShoppingCartDtoRepository")
+    private IShoppingCartRepository repositoryShoppingCartDto;
+    @Autowired
     @Qualifier("IProductsRepository")
     private IProductsRepository repositoryProduct;
 
@@ -33,6 +38,22 @@ public class ShoppingCartService{
     public ShoppingCart getShoppingCartById(Integer id){
         return repository.findById(id).get();
     }
+
+    public ShoppingCartDto getShoppingCartDtoById(Integer id){
+       ShoppingCart shoppingCart = this.getShoppingCartById(id);
+       ShoppingCartDto shoppingCartDto= null;
+       OrderItemDto orderItemDto = null;
+
+
+        //INTENTAR METER LA LISTA DE ORDERITEMDTO EN SHOPPINGCARTDTO
+
+        shoppingCartDto.setId(shoppingCart.getIdShoppingCart());
+        shoppingCartDto.getLstOrderItemDto().add(orderItemDto);
+        shoppingCartDto.setTotal(shoppingCart.getTotal());
+
+        return shoppingCartDto;
+    }
+
 
     public ShoppingCart addProductToShoppingCart(OrderItem orderItem, Integer id) throws Exception{
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
@@ -57,7 +78,7 @@ public class ShoppingCartService{
         //repositoryProduct.findById(idProduct).get().setStock(auxProduct.getStock() - quantityOfProducts);
 
         //AGREGO EL PRODUCTO A AL CARRITO(donde esta la lista de todos los productos) Y SUMO EL TOTAL
-        auxShoppingCart.getLstProduct().add(orderItem);
+        auxShoppingCart.getLstOrderItem().add(orderItem);
         auxShoppingCart.setTotal((double) (orderItem.getQuantity() * orderItem.getItem().getPrice()));
 
         //RETORNO EL CARRITO CON EL PRODUCTO GUARDADO
