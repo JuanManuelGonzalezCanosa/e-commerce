@@ -1,11 +1,10 @@
 package com.demo.ecommerce.services;
 
-import com.demo.ecommerce.dto.OrderItemDto;
 import com.demo.ecommerce.dto.ShoppingCartDto;
 import com.demo.ecommerce.entities.OrderItem;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.repository.IOrderItemRepository;
-import com.demo.ecommerce.repository.IProductsRepository;
+import com.demo.ecommerce.repository.IShoppingCartDtoRepository;
 import com.demo.ecommerce.repository.IShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,10 +21,8 @@ public class ShoppingCartService{
     private IShoppingCartRepository repository;
     @Autowired
     @Qualifier("IShoppingCartDtoRepository")
-    private IShoppingCartRepository repositoryShoppingCartDto;
-    @Autowired
-    @Qualifier("IProductsRepository")
-    private IProductsRepository repositoryProduct;
+    private IShoppingCartDtoRepository repositoryShoppingCartDto;
+
 
     @Autowired
     @Qualifier("IOrderItemRepository")
@@ -40,18 +37,17 @@ public class ShoppingCartService{
     }
 
     public ShoppingCartDto getShoppingCartDtoById(Integer id){
-       ShoppingCart shoppingCart = this.getShoppingCartById(id);
-       ShoppingCartDto shoppingCartDto= null;
-       OrderItemDto orderItemDto = null;
+        //ShoppingCart shoppingCart = this.getShoppingCartById(id);
+        ShoppingCartDto auxShoppingCartDto = repositoryShoppingCartDto.findById(id).get();
 
+        auxShoppingCartDto.setId(id);
 
-        //INTENTAR METER LA LISTA DE ORDERITEMDTO EN SHOPPINGCARTDTO
+        //INTENTAR METER LA LISTA DE OrderItemDto EN SHOPPINGCARTDTO
+        //auxShoppingCartDto.getLstOrderItemDto().add();
 
-        shoppingCartDto.setId(shoppingCart.getIdShoppingCart());
-        shoppingCartDto.getLstOrderItemDto().add(orderItemDto);
-        shoppingCartDto.setTotal(shoppingCart.getTotal());
+        auxShoppingCartDto.setTotal(auxShoppingCartDto.getTotal());
 
-        return shoppingCartDto;
+        return auxShoppingCartDto;
     }
 
 
@@ -79,7 +75,7 @@ public class ShoppingCartService{
 
         //AGREGO EL PRODUCTO A AL CARRITO(donde esta la lista de todos los productos) Y SUMO EL TOTAL
         auxShoppingCart.getLstOrderItem().add(orderItem);
-        auxShoppingCart.setTotal((double) (orderItem.getQuantity() * orderItem.getItem().getPrice()));
+        auxShoppingCart.setTotal(orderItem.getQuantity() * orderItem.getItem().getPrice());
 
         //RETORNO EL CARRITO CON EL PRODUCTO GUARDADO
         return repository.save(auxShoppingCart);
