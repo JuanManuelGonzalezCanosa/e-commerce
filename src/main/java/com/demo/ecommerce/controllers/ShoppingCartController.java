@@ -1,11 +1,9 @@
 package com.demo.ecommerce.controllers;
 
-import com.demo.ecommerce.dto.OrderItemDto;
 import com.demo.ecommerce.dto.ShoppingCartDto;
 import com.demo.ecommerce.entities.OrderItem;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.services.ShoppingCartService;
-import org.hibernate.criterion.Order;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class ShoppingCartController {
@@ -24,6 +21,7 @@ public class ShoppingCartController {
 
     @Autowired
     private ModelMapper modelMapper;
+
 
     @PostMapping("/createShoppingCart")
     public ShoppingCart createToCart(@RequestBody ShoppingCart shoppingCart){
@@ -46,25 +44,12 @@ public class ShoppingCartController {
             ShoppingCart shoppingCart = service.getShoppingCartById(id);
             ShoppingCartDto shoppingCartDto = service.getShoppingCartDtoById(id);
 
-            TypeMap<OrderItem, OrderItemDto> orderToDto  = modelMapper.createTypeMap(OrderItem.class, OrderItemDto.class);
-            orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getName(), OrderItemDto::setNameDto));
-            orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getDescription(), OrderItemDto::setDescriptionDto));
-            orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getPrice(), OrderItemDto::setPriceDto));
-            orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getName(), OrderItemDto::setNameDto));
-            orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().isPromotion(), OrderItemDto::setPromotionDto));
-
-
             TypeMap<ShoppingCart, ShoppingCartDto> mapperShopping = modelMapper.createTypeMap(ShoppingCart.class, ShoppingCartDto.class);
-            mapperShopping.addMappings(mapper -> mapper.map(shopping ->
-                    shopping.getLstOrderItem().stream().map(orderItem -> {
-                        OrderItemDto orderItemMap = new OrderItemDto();
-                        modelMapper.map(orderItem, orderItemMap);
-                                return orderItemMap;}
-                                    ).collect(Collectors.toList()));
+            mapperShopping.addMappings(mapper -> mapper.map(ShoppingCart::getLstOrderItem, ShoppingCartDto::setLstOrderItemDto));
 
-            //shoppingToDto.map(shoppingCart, shoppingCartDto);
+            modelMapper.map(shoppingCart, shoppingCartDto);
 
-            return new ResponseEntity<ShoppingCartDto>(, HttpStatus.OK);
+            return new ResponseEntity<ShoppingCartDto>(shoppingCartDto, HttpStatus.OK);
 
 
         }catch (Exception e){

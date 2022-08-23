@@ -1,10 +1,7 @@
 package com.demo.ecommerce.services;
 
-import com.demo.ecommerce.dto.OrderItemDto;
-import com.demo.ecommerce.dto.ShoppingCartDto;
 import com.demo.ecommerce.entities.OrderItem;
 import com.demo.ecommerce.entities.ShoppingCart;
-import com.demo.ecommerce.exceptions.ShoppingCartNotFound;
 import com.demo.ecommerce.repository.IOrderItemRepository;
 import com.demo.ecommerce.repository.IShoppingCartRepository;
 import org.junit.runner.RunWith;
@@ -14,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Qualifier("IShopping")
 @Service
@@ -48,30 +42,6 @@ public class ShoppingCartService{
     public ShoppingCart getShoppingCartById(Integer id) {
         return repository.findById(id).get();
     }
-
-
-    public ShoppingCartDto getShoppingCartDtoById(Integer id) throws Exception {
-        Optional<ShoppingCart> shoppingCart = Optional.ofNullable(repository.findById(id)).orElseThrow(ShoppingCartNotFound::new);
-        ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
-        mapper.map(shoppingCart.get(), shoppingCartDto);
-
-        shoppingCartDto.setLstOrderItemDto(shoppingCart.get().getLstOrderItem().stream().
-                map((orderItem ->
-                { OrderItemDto orderItemDto = new OrderItemDto();
-                    mapper.map(orderItem, orderItemDto);
-                        return orderItemDto; }))
-                            .collect(Collectors.toList()));
-
-
-        //shoppingCartDto.setLstOrderItemDto(shoppingCart.get().getLstOrderItem().get());
-
-        //mapper.map(shoppingCart.get().getIdShoppingCart(), shoppingCartDto.getId());
-        //mapper.map(shoppingCart.get().getLstOrderItem(), shoppingCartDto.getLstOrderItemDto());
-        //mapper.map(shoppingCart.get().getTotal(), shoppingCartDto.getTotal());
-
-        return shoppingCartDto;
-    }
-
 
     public ShoppingCart addProductToShoppingCart(OrderItem orderItem, Integer id) throws Exception {
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
