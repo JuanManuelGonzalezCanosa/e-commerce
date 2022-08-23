@@ -42,7 +42,7 @@ public class ShoppingCartController {
     public ResponseEntity<ShoppingCartDto> getShoppingCartDtoById(@PathVariable Integer id){
         try{
             ShoppingCart shoppingCart = service.getShoppingCartById(id);
-            ShoppingCartDto shoppingCartDto = service.getShoppingCartDtoById(id);
+            ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
 
             TypeMap<ShoppingCart, ShoppingCartDto> mapperShopping = modelMapper.createTypeMap(ShoppingCart.class, ShoppingCartDto.class);
             mapperShopping.addMappings(mapper -> mapper.map(ShoppingCart::getLstOrderItem, ShoppingCartDto::setLstOrderItemDto));
