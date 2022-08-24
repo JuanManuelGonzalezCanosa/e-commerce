@@ -36,4 +36,6 @@ public class Product {
 
     @Column(name = "promotion", nullable = false)
     private boolean promotion;
+
+
 }

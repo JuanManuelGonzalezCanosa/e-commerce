@@ -59,7 +59,7 @@ public class ShoppingCartService{
             }else {
                 //TIENE DESCUENTO?
                 if(orderItem.getItem().isPromotion()){
-                    orderItem.getItem().setPrice((long) (0.90 * orderItem.getItem().getPrice()));
+                    orderItem.getItem().setPrice((double) (0.90 * orderItem.getItem().getPrice()));
                     }
         }
 
