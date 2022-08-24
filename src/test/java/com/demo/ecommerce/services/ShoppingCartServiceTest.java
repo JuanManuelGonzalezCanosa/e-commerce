@@ -12,7 +12,7 @@ public class ShoppingCartServiceTest {
     @Test
     public void given_item_with_price_4500_shoul_get_a_sum_of_4500() throws Exception {
 
-        double result = 4_500.0;
+        double result = 4500.0;
 
         ShoppingCartService shoppingCartService = new ShoppingCartService();
         Product product = new Product(1,"Sandia", "Fruta", 200, "asd", 250, true, true);
