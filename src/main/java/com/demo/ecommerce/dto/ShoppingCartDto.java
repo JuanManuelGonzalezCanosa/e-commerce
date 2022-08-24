@@ -1,6 +1,7 @@
 package com.demo.ecommerce.dto;
 
 import com.demo.ecommerce.entities.OrderItem;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 
@@ -24,8 +25,9 @@ public class ShoppingCartDto {
         orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getName(), OrderItemDto::setNameDto));
         orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getDescription(), OrderItemDto::setDescriptionDto));
         orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getPrice(), OrderItemDto::setPriceDto));
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getName(), OrderItemDto::setNameDto));
         orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().isPromotion(), OrderItemDto::setPromotionDto));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getId(), OrderItemDto::setIdProductDto));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getQuantity(), OrderItemDto::setQuantityDto));
     }
 
     public void setLstOrderItemDto(List<OrderItem> list) {
@@ -34,5 +36,18 @@ public class ShoppingCartDto {
             modelMapper.map(orderItem, orderItemDto);
             return orderItemDto;
         })).collect(Collectors.toList());
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    @JsonProperty("items")
+    public List<OrderItemDto> getLstOrderItemDto() {
+        return lstOrderItemDto;
     }
 }

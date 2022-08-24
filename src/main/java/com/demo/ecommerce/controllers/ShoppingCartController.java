@@ -1,5 +1,6 @@
 package com.demo.ecommerce.controllers;
 
+import com.demo.ecommerce.dto.OrderItemDto;
 import com.demo.ecommerce.dto.ShoppingCartDto;
 import com.demo.ecommerce.entities.OrderItem;
 import com.demo.ecommerce.entities.ShoppingCart;
@@ -46,6 +47,8 @@ public class ShoppingCartController {
 
             TypeMap<ShoppingCart, ShoppingCartDto> mapperShopping = modelMapper.createTypeMap(ShoppingCart.class, ShoppingCartDto.class);
             mapperShopping.addMappings(mapper -> mapper.map(ShoppingCart::getLstOrderItem, ShoppingCartDto::setLstOrderItemDto));
+            mapperShopping.addMappings(mapper -> mapper.map(ShoppingCart::getTotal, ShoppingCartDto::setTotal));
+            mapperShopping.addMappings(mapper -> mapper.map(ShoppingCart::getIdShoppingCart, ShoppingCartDto::setId));
 
             modelMapper.map(shoppingCart, shoppingCartDto);
 
