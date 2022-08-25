@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,7 +20,7 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idShoppingCart;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Column(name = "lstProduct", nullable = true)
     private List<OrderItem> lstOrderItem;
 
@@ -30,6 +30,21 @@ public class ShoppingCart {
     @Column(name = "status", nullable = true)
     private boolean status;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ShoppingCart)) return false;
+        ShoppingCart that = (ShoppingCart) o;
+        return status == that.status && Objects.equals(idShoppingCart, that.idShoppingCart) && Objects.equals(lstOrderItem, that.lstOrderItem) && Objects.equals(total, that.total);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(idShoppingCart, lstOrderItem, total, status);
+    }
 
+    public void addOrderItem(OrderItem orderItem) {
+        this.lstOrderItem.add(orderItem);
+        this.total += orderItem.getQuantity() * orderItem.getItem().getPrice();
+    }
 }

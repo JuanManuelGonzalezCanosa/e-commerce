@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,4 +39,16 @@ public class Product {
     private boolean promotion;
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        return stock == product.stock && Double.compare(product.price, price) == 0 && enabled == product.enabled && promotion == product.promotion && Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(photoURL, product.photoURL);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, stock, photoURL, price, enabled, promotion);
+    }
 }

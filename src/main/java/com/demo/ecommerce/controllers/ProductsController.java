@@ -8,33 +8,34 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 
 @RestController
-public class ProductsController{
+public class ProductsController {
     @Autowired
     private ProductService service;
 
-    @PostMapping("/createProduct")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product){
-
-        try{
-            return new ResponseEntity<Product>(service.createProduct(product), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<Product>(HttpStatus.BAD_REQUEST);
+    //Ver manejo de excepciones.
+    @ExceptionHandler(value = StockEception.class) {
+        public ResponseEntity badReques (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
     @GetMapping("/product/all")
-    public List<Product> lstProduct(){
+    public List<Product> lstProduct() {
         return service.lstProduct();
     }
 
     @GetMapping("/product/{id}")
-    public Product getProductById(@PathVariable Integer id){
+    public Product getProductById(@PathVariable Integer id) {
         System.out.println(id);
         return service.getProductById(id);
+    }
+
+    @PostMapping("/createProduct")
+    public ResponseEntity<?> createProduct(@RequestBody Product product) {
+        return new ResponseEntity<Product>(service.createProduct(product), HttpStatus.OK);
     }
 
 }

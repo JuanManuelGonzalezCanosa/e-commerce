@@ -1,6 +1,6 @@
 package com.demo.ecommerce.repository;
 
-import com.demo.ecommerce.entities.Product;
+import com.demo.ecommerce.entities.OrderItem;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Qualifier("IOrderItemRepository")
-public interface IOrderItemRepository extends JpaRepository<Product, Integer> {
+public interface IOrderItemRepository extends JpaRepository<OrderItem, Integer> {
 }

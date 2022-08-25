@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,4 +26,17 @@ public class OrderItem {
 
     @Column(name = "quantity")
     private int quantity;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OrderItem)) return false;
+        OrderItem orderItem = (OrderItem) o;
+        return quantity == orderItem.quantity && Objects.equals(idProduct, orderItem.idProduct) && Objects.equals(item, orderItem.item);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idProduct, item, quantity);
+    }
 }
