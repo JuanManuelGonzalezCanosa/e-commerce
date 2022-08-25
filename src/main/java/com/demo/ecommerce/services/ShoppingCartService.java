@@ -16,7 +16,7 @@ import java.util.List;
 @Qualifier("IShopping")
 @Service
 //@ExtendWith(MockitoExtension.class)
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
 public class ShoppingCartService{
 
     @Autowired
