@@ -16,11 +16,11 @@ public class ProductsController {
     private ProductService service;
 
     //Ver manejo de excepciones.
-    @ExceptionHandler(value = StockEception.class) {
-        public ResponseEntity badReques (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
-    }
+   // @ExceptionHandler(value = StockEception.class) {
+     //   public ResponseEntity badReques (Exception e){
+       //     return new ResponseEntity<>(HttpStatus.BAD_REQUEST, e.getMessage());
+        //}
+    //}
 
     @GetMapping("/product/all")
     public List<Product> lstProduct() {

@@ -29,4 +29,24 @@ public class ProductService {
         return repository.findById(id).get();
     }
 
+
+    public boolean putProductById(Product product, Integer id) {
+
+        Product aux = this.getProductById(id);
+
+        aux.setName(product.getName());
+        aux.setEnabled(product.isEnabled());
+        aux.setPromotion(product.isPromotion());
+        aux.setStock(product.getStock());
+        aux.setDescription(product.getDescription());
+        aux.setPrice(product.getPrice());
+        aux.setPhotoURL(product.getPhotoURL());
+
+        return  true;
+    }
+
+    public boolean deleteProductById(Integer id){
+        repository.deleteById(id);
+        return true;
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShoppingCartService{
@@ -38,6 +39,22 @@ public class ShoppingCartService{
         return repository.findById(id).get();
     }
 
+    public boolean putShoppingCartById(ShoppingCart shoppingCart, Integer id) {
+        ShoppingCart aux = this.getShoppingCartById(id);
+
+        aux.setLstOrderItem(shoppingCart.getLstOrderItem());
+        aux.setTotal(shoppingCart.getTotal());
+        aux.setStatus(shoppingCart.isStatus());
+
+        return true;
+    }
+
+    public boolean deleteShoppingCartId(Integer id){
+        repository.deleteById(id);
+
+        return true;
+    }
+
     public ShoppingCart addProductToShoppingCart(OrderItem orderItem, Integer id) throws Exception {
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
         ShoppingCart auxShoppingCart = repository.findById(id).get(); //mock
@@ -61,5 +78,13 @@ public class ShoppingCartService{
         auxShoppingCart.addOrderItem(orderItem);
 
         return repository.save(auxShoppingCart); //mock
+    }
+
+    public boolean outProductByCarritoShopping(Integer idOrderItem, Integer idShoppingCart){
+        boolean flag = false;
+
+        repositoryIOrderItem.deleteById(idOrderItem);
+
+        return true;
     }
 }
