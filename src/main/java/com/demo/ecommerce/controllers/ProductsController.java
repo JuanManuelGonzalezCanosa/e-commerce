@@ -38,4 +38,15 @@ public class ProductsController {
         return new ResponseEntity<Product>(service.createProduct(product), HttpStatus.OK);
     }
 
+    @PutMapping("/putProduct/{id}")
+    public boolean putProductById(@RequestBody Product product, @PathVariable Integer id){
+        return service.putProductById(product, id);
+    }
+
+    @PutMapping("/deleteProduct/{id}")
+    public  boolean deleteProductById(@PathVariable Integer id){
+        return service.deleteProductById(id);
+    }
+
+
 }

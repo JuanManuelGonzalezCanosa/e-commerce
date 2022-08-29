@@ -56,13 +56,14 @@ public class ShoppingCartService{
     }
 
     public ShoppingCart addProductToShoppingCart(OrderItem orderItem, Integer id) throws Exception {
+
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
         ShoppingCart auxShoppingCart = repository.findById(id).get(); //mock
 
 
         //Refactorizar validacion y llevarlo a ShoppingCart
         if (!orderItem.getItem().isEnabled()) {
-            throw new Exception("Is not enabled");
+            throw new Exception("The Product is not enabled");
         }
 
 
@@ -75,16 +76,9 @@ public class ShoppingCartService{
             }
         }
 
-        auxShoppingCart.addOrderItem(orderItem);
+        auxShoppingCart.getLstOrderItem().add(orderItem);
 
         return repository.save(auxShoppingCart); //mock
     }
 
-    public boolean outProductByCarritoShopping(Integer idOrderItem, Integer idShoppingCart){
-        boolean flag = false;
-
-        repositoryIOrderItem.deleteById(idOrderItem);
-
-        return true;
-    }
 }

@@ -18,7 +18,7 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idProduct")
-    private Integer idProduct;
+    private Integer idOrderItem;
 
     @OneToOne
     @MapsId
@@ -32,11 +32,11 @@ public class OrderItem {
         if (this == o) return true;
         if (!(o instanceof OrderItem)) return false;
         OrderItem orderItem = (OrderItem) o;
-        return quantity == orderItem.quantity && Objects.equals(idProduct, orderItem.idProduct) && Objects.equals(item, orderItem.item);
+        return quantity == orderItem.quantity && Objects.equals(idOrderItem, orderItem.idOrderItem) && Objects.equals(item, orderItem.item);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProduct, item, quantity);
+        return Objects.hash(idOrderItem, item, quantity);
     }
 }

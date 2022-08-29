@@ -1,9 +1,9 @@
 package com.demo.ecommerce.controllers;
 
-import com.demo.ecommerce.dto.OrderItemDto;
 import com.demo.ecommerce.dto.ShoppingCartDto;
 import com.demo.ecommerce.entities.OrderItem;
 import com.demo.ecommerce.entities.ShoppingCart;
+import com.demo.ecommerce.services.OrderItemService;
 import com.demo.ecommerce.services.ShoppingCartService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -19,6 +19,9 @@ public class ShoppingCartController {
 
     @Autowired
     private ShoppingCartService service;
+
+    @Autowired
+    private OrderItemService serviceOrderItem;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -71,6 +74,12 @@ public class ShoppingCartController {
         }
 
 
+    }
+
+    @PutMapping("/outProductByShoppingCart/{id}")
+    public boolean outProductByCarritoShopping(@PathVariable Integer id){
+
+        return serviceOrderItem.outProductByCarritoShopping(id);
     }
 
 

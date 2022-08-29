@@ -51,4 +51,16 @@ public class Product {
     public int hashCode() {
         return Objects.hash(id, name, description, stock, photoURL, price, enabled, promotion);
     }
+
+    public Product(String name, String description, int stock, String photoURL, double price, boolean enabled, boolean promotion) {
+        this.name = name;
+        this.description = description;
+        this.stock = stock;
+        this.photoURL = photoURL;
+        this.price = price;
+        this.enabled = enabled;
+        this.promotion = promotion;
+    }
 }
+
+

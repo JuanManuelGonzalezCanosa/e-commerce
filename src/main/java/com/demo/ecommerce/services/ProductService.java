@@ -42,6 +42,7 @@ public class ProductService {
         aux.setPrice(product.getPrice());
         aux.setPhotoURL(product.getPhotoURL());
 
+        repository.save(aux);
         return  true;
     }
 
