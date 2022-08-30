@@ -12,9 +12,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ShoppingCartService{
@@ -92,5 +94,18 @@ public class ShoppingCartService{
 
         return repository.save(auxShoppingCart); //mock
     }
+
+    public ShoppingCart outProductByCarritoShopping(Integer idShopoingCart, Integer idOrderItem){
+        ShoppingCart shoppingCart = this.getShoppingCartById(idShopoingCart);
+
+        List<OrderItem> list = shoppingCart.getLstOrderItem().stream().filter((orderItem)-> {
+            return orderItem.getIdOrderItem().compareTo(idOrderItem);
+        }).collect(Collectors.toList());
+
+        shoppingCart.setLstOrderItem(list);
+
+        return repository.save(shoppingCart);
+    }
+
 
 }

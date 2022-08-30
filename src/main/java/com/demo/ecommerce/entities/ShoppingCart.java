@@ -30,6 +30,8 @@ public class ShoppingCart {
     @Column(name = "status", nullable = true)
     private boolean status;
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

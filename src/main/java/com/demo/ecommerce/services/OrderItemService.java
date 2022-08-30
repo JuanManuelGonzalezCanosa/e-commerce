@@ -13,19 +13,6 @@ public class OrderItemService {
     @Qualifier("IOrderItemRepository")
     private IOrderItemRepository repositoryIOrderItem;
 
-    public boolean outProductByCarritoShopping(Integer id){
 
-
-        repositoryIOrderItem.findAll().remove(id);
-
-        return true;
-    }
-
-    public boolean outProductByCarritoShoppingII(Integer id){
-
-        repositoryIOrderItem.deleteById(id);
-
-        return true;
-    }
 
 }
