@@ -77,7 +77,7 @@ public class ShoppingCartController {
     }
 
     @PutMapping("/outProductByShoppingCart/{id}")
-    public boolean outProductByCarritoShopping(@PathVariable Integer id){
+    public boolean outProductByCarritoShoppingII(@PathVariable Integer id){
 
         return serviceOrderItem.outProductByCarritoShopping(id);
     }

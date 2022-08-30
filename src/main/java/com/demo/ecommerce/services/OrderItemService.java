@@ -15,6 +15,7 @@ public class OrderItemService {
 
     public boolean outProductByCarritoShopping(Integer id){
 
+
         repositoryIOrderItem.findAll().remove(id);
 
         return true;
@@ -26,8 +27,5 @@ public class OrderItemService {
 
         return true;
     }
-
-
-
 
 }
