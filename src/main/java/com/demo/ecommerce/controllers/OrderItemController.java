@@ -1,10 +1,11 @@
 package com.demo.ecommerce.controllers;
 
+import com.demo.ecommerce.entities.OrderItem;
 import com.demo.ecommerce.services.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RequestMapping("/orderitem")
@@ -13,6 +14,28 @@ public class OrderItemController {
     @Autowired
     private OrderItemService serviceOrderItem;
 
+
+    //CREAR TODOS LO DE ORDERITEM ID TODOS MODIFICAR Y ELIMINAR
+
+    @PostMapping("/create")
+    public OrderItem createOrderItem(@RequestBody OrderItem orderItem){
+        return serviceOrderItem.createOrderItem(orderItem);
+    }
+
+    @GetMapping("/all")
+    public List<OrderItem> lstOrderItem(){
+        return serviceOrderItem.lstOrderItem();
+    }
+
+    @GetMapping("/{id}")
+    public OrderItem orderItemId(@PathVariable Integer id){
+        return serviceOrderItem.getOrderItemById(id);
+    }
+
+    @PutMapping("/put/{id}")
+    public OrderItem putOrderItemById(@RequestBody OrderItem orderItem, @PathVariable Integer id){
+        return serviceOrderItem.putOrderItemById(orderItem, id);
+    }
 
     //HACERLO DE TIPO RESPONSE ENTITY
     @DeleteMapping("/{id}")
