@@ -96,11 +96,11 @@ public class ShoppingCartService{
     }
 
     public ShoppingCart outProductByCarritoShopping(Integer idShopoingCart, Integer idOrderItem){
+
         ShoppingCart shoppingCart = this.getShoppingCartById(idShopoingCart);
 
-        List<OrderItem> list = shoppingCart.getLstOrderItem().stream().filter((orderItem)-> {
-            return orderItem.getIdOrderItem().compareTo(idOrderItem);
-        }).collect(Collectors.toList());
+        List<OrderItem> list = shoppingCart.getLstOrderItem().stream().filter(
+                orderItem-> !orderItem.getIdOrderItem().equals(idOrderItem)).collect(Collectors.toList());
 
         shoppingCart.setLstOrderItem(list);
 

@@ -13,6 +13,14 @@ public class OrderItemService {
     @Qualifier("IOrderItemRepository")
     private IOrderItemRepository repositoryIOrderItem;
 
+    public boolean deleteOrderItem(Integer id) throws Exception{
 
+        if(!repositoryIOrderItem.findById(id).isPresent()){
+            //CREAR LA CLASE DE EXCEPCION
+            //throw new Exception();
+        }
+        repositoryIOrderItem.deleteById(id);
+        return true;
+    }
 
 }
