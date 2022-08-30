@@ -2,8 +2,8 @@ package com.demo.ecommerce.exceptions;
 
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 
-public class StockEception extends Exception {
-    StockEception(AbstractReadWriteAccess.Item item) {
-        super("No Hay Stock para el item....");
+public class StockEception extends RuntimeException {
+    public StockEception() {
+        super("No Hay Stock");
     }
 }

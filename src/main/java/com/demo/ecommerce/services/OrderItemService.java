@@ -20,5 +20,14 @@ public class OrderItemService {
         return true;
     }
 
+    public boolean outProductByCarritoShoppingII(Integer id){
+
+        repositoryIOrderItem.deleteById(id);
+
+        return true;
+    }
+
+
+
 
 }

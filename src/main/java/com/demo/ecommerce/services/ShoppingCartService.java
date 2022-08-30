@@ -2,6 +2,10 @@ package com.demo.ecommerce.services;
 
 import com.demo.ecommerce.entities.OrderItem;
 import com.demo.ecommerce.entities.ShoppingCart;
+import com.demo.ecommerce.exceptions.ErrorOrderItemIsNotEnabled;
+import com.demo.ecommerce.exceptions.ErrorQuantityProductNegative;
+import com.demo.ecommerce.exceptions.ErrorShoppingCartIsNotEnabled;
+import com.demo.ecommerce.exceptions.StockEception;
 import com.demo.ecommerce.repository.IOrderItemRepository;
 import com.demo.ecommerce.repository.IShoppingCartRepository;
 import org.modelmapper.ModelMapper;
@@ -60,20 +64,28 @@ public class ShoppingCartService{
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
         ShoppingCart auxShoppingCart = repository.findById(id).get(); //mock
 
-
-        //Refactorizar validacion y llevarlo a ShoppingCart
-        if (!orderItem.getItem().isEnabled()) {
-            throw new Exception("The Product is not enabled");
+        // CANTIDAD DE PRODUCTOS NEGATIVA
+        if(orderItem.getQuantity() < 0){
+            throw  new Exception((new ErrorQuantityProductNegative().getMessage()));
         }
 
+        //EL PRODUCTO NO ESTA HABILITADO
+        if (!orderItem.getItem().isEnabled()) {
+            throw new Exception(new ErrorOrderItemIsNotEnabled().getMessage());
+        }
 
+        //NO HAY STOCK
         if (orderItem.getItem().getStock() < orderItem.getQuantity()) {
-            throw new Exception("no stock");
+            throw new Exception(new StockEception().getMessage());
         } else {
             //TIENE DESCUENTO?
             if (orderItem.getItem().isPromotion()) {
                 orderItem.getItem().setPrice((double) (0.90 * orderItem.getItem().getPrice()));
             }
+        }
+
+        if(!auxShoppingCart.isStatus()){
+            throw new Exception(new ErrorShoppingCartIsNotEnabled().getMessage());
         }
 
         auxShoppingCart.getLstOrderItem().add(orderItem);
