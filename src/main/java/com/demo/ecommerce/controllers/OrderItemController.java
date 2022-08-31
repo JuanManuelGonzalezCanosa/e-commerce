@@ -15,8 +15,6 @@ public class OrderItemController {
     private OrderItemService serviceOrderItem;
 
 
-    //CREAR TODOS LO DE ORDERITEM ID TODOS MODIFICAR Y ELIMINAR
-
     @PostMapping("/create")
     public OrderItem createOrderItem(@RequestBody OrderItem orderItem){
         return serviceOrderItem.createOrderItem(orderItem);
@@ -24,17 +22,29 @@ public class OrderItemController {
 
     @GetMapping("/all")
     public List<OrderItem> lstOrderItem(){
-        return serviceOrderItem.lstOrderItem();
+        try {
+            return serviceOrderItem.lstOrderItem();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
     public OrderItem orderItemId(@PathVariable Integer id){
-        return serviceOrderItem.getOrderItemById(id);
+        try {
+            return serviceOrderItem.getOrderItemById(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @PutMapping("/put/{id}")
     public OrderItem putOrderItemById(@RequestBody OrderItem orderItem, @PathVariable Integer id){
-        return serviceOrderItem.putOrderItemById(orderItem, id);
+        try {
+            return serviceOrderItem.putOrderItemById(orderItem, id);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     //HACERLO DE TIPO RESPONSE ENTITY
@@ -44,7 +54,7 @@ public class OrderItemController {
         try {
             return serviceOrderItem.deleteOrderItem(id);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 

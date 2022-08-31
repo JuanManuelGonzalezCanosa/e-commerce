@@ -1,8 +1,8 @@
 package com.demo.ecommerce.exceptions;
 
-public class OrderItemNotFound extends RuntimeException{
+public class IdNotFound extends RuntimeException{
 
-    public OrderItemNotFound(){
+    public IdNotFound(){
         super("Order Item not exists");
     }
 }

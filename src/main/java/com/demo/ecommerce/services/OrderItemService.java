@@ -2,6 +2,8 @@ package com.demo.ecommerce.services;
 
 import com.demo.ecommerce.entities.OrderItem;
 import com.demo.ecommerce.entities.Product;
+import com.demo.ecommerce.exceptions.IdNotFound;
+import com.demo.ecommerce.exceptions.ListEmpty;
 import com.demo.ecommerce.repository.IOrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,17 +26,26 @@ public class OrderItemService {
         return repositoryIOrderItem.save(orderItem);
     }
 
-    public List<OrderItem> lstOrderItem() {
+    public List<OrderItem> lstOrderItem() throws Exception {
+
+        if(repositoryIOrderItem.findAll().isEmpty()){
+            throw new Exception(new ListEmpty().getMessage());
+        }
+
         return repositoryIOrderItem.findAll();
     }
 
-    public OrderItem getOrderItemById(Integer id) {
+    public OrderItem getOrderItemById(Integer id) throws Exception {
+
+        if(!repositoryIOrderItem.findById(id).isPresent()){
+            throw new Exception(new IdNotFound().getMessage());
+        }
 
         return repositoryIOrderItem.findById(id).get();
     }
 
 
-    public OrderItem putOrderItemById(OrderItem orderItem, Integer id) {
+    public OrderItem putOrderItemById(OrderItem orderItem, Integer id) throws Exception {
 
         OrderItem aux = this.getOrderItemById(id);
 
@@ -47,8 +58,7 @@ public class OrderItemService {
     public boolean deleteOrderItem(Integer id) throws Exception{
 
         if(!repositoryIOrderItem.findById(id).isPresent()){
-            //CREAR LA CLASE DE EXCEPCION
-            //throw new Exception();
+            throw new Exception(new IdNotFound().getMessage());
         }
         repositoryIOrderItem.deleteById(id);
         return true;

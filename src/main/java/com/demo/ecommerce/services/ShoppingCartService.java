@@ -92,7 +92,7 @@ public class ShoppingCartService{
 
         auxShoppingCart.getLstOrderItem().add(orderItem);
 
-        return repository.save(auxShoppingCart); //mock
+        return repository.save(auxShoppingCart);
     }
 
     public ShoppingCart outProductByCarritoShopping(Integer idShopoingCart, Integer idOrderItem){
