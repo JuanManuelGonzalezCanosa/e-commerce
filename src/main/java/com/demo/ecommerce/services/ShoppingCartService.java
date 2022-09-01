@@ -8,6 +8,7 @@ import com.demo.ecommerce.exceptions.ErrorShoppingCartIsNotEnabled;
 import com.demo.ecommerce.exceptions.StockEception;
 import com.demo.ecommerce.repository.IOrderItemRepository;
 import com.demo.ecommerce.repository.IShoppingCartRepository;
+import com.demo.ecommerce.util.ShoppingCartProxy;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -64,54 +65,24 @@ public class ShoppingCartService {
     public ShoppingCart addProductToShoppingCart(OrderItem orderItem, Integer id) throws Exception {
 
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
-        ShoppingCart auxShoppingCart = repository.findById(id).get(); //mock
+        ShoppingCart shoppingCart = repository.findById(id).get(); //mock
 
-        this.shoppingCartProxy(orderItem, id);
+        ShoppingCartProxy shoppingCartProxy = new ShoppingCartProxy(shoppingCart);
 
-        auxShoppingCart.getLstOrderItem().add(orderItem);
+        shoppingCartProxy.addOrderItem(orderItem);
 
-        return repository.save(auxShoppingCart);
+        return this.repository.save(shoppingCartProxy.getShoppingCart());
     }
 
-    public ShoppingCart outProductByCarritoShopping(Integer idShopoingCart, Integer idOrderItem) {
+    public ShoppingCart outProductByCarritoShopping(Integer idShopoingCart, Integer idOrderItem) throws Exception {
+        ShoppingCart shoppingCart = repository.findById(idShopoingCart).get(); //mock
 
-        ShoppingCart shoppingCart = this.getShoppingCartById(idShopoingCart);
+        ShoppingCartProxy shoppingCartProxy = new ShoppingCartProxy(shoppingCart,repository);
 
-        List<OrderItem> list = shoppingCart.getLstOrderItem().stream().filter(
-                orderItem -> !orderItem.getIdOrderItem().equals(idOrderItem)).collect(Collectors.toList());
-
-        shoppingCart.setLstOrderItem(list);
-
-        return repository.save(shoppingCart);
+        shoppingCartProxy.removerOrderItem(idOrderItem);
+        return this.repository.save(shoppingCartProxy.getShoppingCart());
     }
 
-    public void shoppingCartProxy(OrderItem orderItem, Integer id) throws Exception {
-        ShoppingCart shoppingCart = this.getShoppingCartById(id);
-
-        // CANTIDAD DE PRODUCTOS NEGATIVA
-        if (orderItem.getQuantity() < 0) {
-            throw new Exception((new ErrorQuantityProductNegative().getMessage()));
-        }
-
-        //EL PRODUCTO NO ESTA HABILITADO
-        if (!orderItem.getItem().isEnabled()) {
-            throw new Exception(new ErrorOrderItemIsNotEnabled().getMessage());
-        }
-
-        //NO HAY STOCK
-        if (orderItem.getItem().getStock() < orderItem.getQuantity()) {
-            throw new Exception(new StockEception().getMessage());
-        } else {
-            //TIENE DESCUENTO?
-            if (orderItem.getItem().isPromotion()) {
-                orderItem.getItem().setPrice((double) (0.90 * orderItem.getItem().getPrice()));
-            }
-        }
-
-        if (!shoppingCart.isStatus()) {
-            throw new Exception(new ErrorShoppingCartIsNotEnabled().getMessage());
-        }
-    }
 
 
 

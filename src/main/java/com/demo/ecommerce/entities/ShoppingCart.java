@@ -45,8 +45,5 @@ public class ShoppingCart {
         return Objects.hash(idShoppingCart, lstOrderItem, total, status);
     }
 
-    public void addOrderItem(OrderItem orderItem) {
-        this.lstOrderItem.add(orderItem);
-        this.total += orderItem.getQuantity() * orderItem.getItem().getPrice();
-    }
+
 }
