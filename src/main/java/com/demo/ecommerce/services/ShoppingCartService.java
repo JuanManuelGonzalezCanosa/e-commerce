@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ShoppingCartService{
+public class ShoppingCartService {
 
     @Autowired
     @Qualifier("IShoppingCartRepository")
@@ -55,7 +55,7 @@ public class ShoppingCartService{
         return true;
     }
 
-    public boolean deleteShoppingCartId(Integer id){
+    public boolean deleteShoppingCartId(Integer id) {
         repository.deleteById(id);
 
         return true;
@@ -66,9 +66,31 @@ public class ShoppingCartService{
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
         ShoppingCart auxShoppingCart = repository.findById(id).get(); //mock
 
+        this.shoppingCartProxy(orderItem, id);
+
+        auxShoppingCart.getLstOrderItem().add(orderItem);
+
+        return repository.save(auxShoppingCart);
+    }
+
+    public ShoppingCart outProductByCarritoShopping(Integer idShopoingCart, Integer idOrderItem) {
+
+        ShoppingCart shoppingCart = this.getShoppingCartById(idShopoingCart);
+
+        List<OrderItem> list = shoppingCart.getLstOrderItem().stream().filter(
+                orderItem -> !orderItem.getIdOrderItem().equals(idOrderItem)).collect(Collectors.toList());
+
+        shoppingCart.setLstOrderItem(list);
+
+        return repository.save(shoppingCart);
+    }
+
+    public void shoppingCartProxy(OrderItem orderItem, Integer id) throws Exception {
+        ShoppingCart shoppingCart = this.getShoppingCartById(id);
+
         // CANTIDAD DE PRODUCTOS NEGATIVA
-        if(orderItem.getQuantity() < 0){
-            throw  new Exception((new ErrorQuantityProductNegative().getMessage()));
+        if (orderItem.getQuantity() < 0) {
+            throw new Exception((new ErrorQuantityProductNegative().getMessage()));
         }
 
         //EL PRODUCTO NO ESTA HABILITADO
@@ -86,26 +108,11 @@ public class ShoppingCartService{
             }
         }
 
-        if(!auxShoppingCart.isStatus()){
+        if (!shoppingCart.isStatus()) {
             throw new Exception(new ErrorShoppingCartIsNotEnabled().getMessage());
         }
-
-        auxShoppingCart.getLstOrderItem().add(orderItem);
-
-        return repository.save(auxShoppingCart);
     }
 
-    public ShoppingCart outProductByCarritoShopping(Integer idShopoingCart, Integer idOrderItem){
-
-        ShoppingCart shoppingCart = this.getShoppingCartById(idShopoingCart);
-
-        List<OrderItem> list = shoppingCart.getLstOrderItem().stream().filter(
-                orderItem-> !orderItem.getIdOrderItem().equals(idOrderItem)).collect(Collectors.toList());
-
-        shoppingCart.setLstOrderItem(list);
-
-        return repository.save(shoppingCart);
-    }
 
 
 }
