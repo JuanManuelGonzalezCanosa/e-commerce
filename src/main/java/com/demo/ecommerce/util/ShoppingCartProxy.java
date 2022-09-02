@@ -4,10 +4,13 @@ import com.demo.ecommerce.entities.OrderItem;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.exceptions.ErrorOrderItemIsNotEnabled;
 import com.demo.ecommerce.exceptions.ErrorQuantityProductNegative;
+import com.demo.ecommerce.exceptions.ShoppingCartFull;
 import com.demo.ecommerce.exceptions.StockEception;
+import com.demo.ecommerce.services.OrderItemService;
 
 public class ShoppingCartProxy implements IShoppingCart {
     private final ShoppingCart shoppingCart;
+
     public ShoppingCartProxy (ShoppingCart shoppingCart){
         this.shoppingCart = shoppingCart;
     }
@@ -31,7 +34,7 @@ public class ShoppingCartProxy implements IShoppingCart {
         }
             //TIENE DESCUENTO?
         if (orderItem.getItem().isPromotion()) {
-            orderItem.getItem().setPrice(0.90 * orderItem.getItem().getPrice());
+            orderItem.getItem().setPrice(this.shoppingCart.getTotal() + (0.90 * ((orderItem.getItem().getPrice() *orderItem.getQuantity()))));
         }
 
         this.shoppingCart.getLstOrderItem().add(orderItem);
@@ -42,15 +45,19 @@ public class ShoppingCartProxy implements IShoppingCart {
 
     @Override
     public void removerOrderItem(Integer idOrderItem) throws Exception{
-        // filter listOrderitem x id y recuperallo
-        OrderItem orderItem = ;
-        this.shoppingCart.getLstOrderItem().removeIf((orderItem_ -> orderItem_.getIdOrderItem().equals(orderItem)));
+
+        OrderItem orderItem = this.shoppingCart.getLstOrderItem().get(idOrderItem);
+        this.shoppingCart.getLstOrderItem().removeIf((orderItem_ -> orderItem_.equals(orderItem)));
 
         this.shoppingCart.setTotal(this.shoppingCart.getTotal() - (orderItem.getItem().getPrice() *orderItem.getQuantity()));
     }
 
-    public boolean removeShopping(){
-        // podes borra el carrito si no hay orderiTems presente
+    public void removeShopping(ShoppingCart shoppingCart)throws Exception{
+
+        if(!shoppingCart.getLstOrderItem().isEmpty()){
+            throw new ShoppingCartFull();
+        }
+
     }
 
     public ShoppingCart getShoppingCart() {

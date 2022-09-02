@@ -8,6 +8,7 @@ import com.demo.ecommerce.exceptions.ErrorShoppingCartIsNotEnabled;
 import com.demo.ecommerce.exceptions.StockEception;
 import com.demo.ecommerce.repository.IOrderItemRepository;
 import com.demo.ecommerce.repository.IShoppingCartRepository;
+import com.demo.ecommerce.util.IShoppingCart;
 import com.demo.ecommerce.util.ShoppingCartProxy;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,10 @@ public class ShoppingCartService {
     @Qualifier("IOrderItemRepository")
     private IOrderItemRepository repositoryIOrderItem;
 
+    @Autowired
+    @Qualifier("IShoppingCart")
+    private IShoppingCart iShoppingCart;
+
     public ShoppingCart createToCart(ShoppingCart shoppingCart) {
         return repository.save(shoppingCart);
     }
@@ -56,12 +61,6 @@ public class ShoppingCartService {
         return true;
     }
 
-    public boolean deleteShoppingCartId(Integer id) {
-        repository.deleteById(id);
-
-        return true;
-    }
-
     public ShoppingCart addProductToShoppingCart(OrderItem orderItem, Integer id) throws Exception {
 
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
@@ -77,10 +76,19 @@ public class ShoppingCartService {
     public ShoppingCart outProductByCarritoShopping(Integer idShopoingCart, Integer idOrderItem) throws Exception {
         ShoppingCart shoppingCart = repository.findById(idShopoingCart).get(); //mock
 
-        ShoppingCartProxy shoppingCartProxy = new ShoppingCartProxy(shoppingCart,repository);
+        ShoppingCartProxy shoppingCartProxy = new ShoppingCartProxy(shoppingCart);
 
         shoppingCartProxy.removerOrderItem(idOrderItem);
         return this.repository.save(shoppingCartProxy.getShoppingCart());
+    }
+
+    public boolean deleteShoppingCartId(ShoppingCart shoppingCart) throws Exception {
+
+        iShoppingCart.removeShopping(shoppingCart);
+
+        this.repository.delete(shoppingCart);
+
+        return true;
     }
 
 
