@@ -85,7 +85,7 @@ public class ShoppingCartController {
     }
 
     @DeleteMapping("/outProductByShoppingCart/shoppingid/{idShopoingCart}/itemid/{idOrderItem}")
-    public ShoppingCart outProductByCarritoShoppingII(@PathVariable Integer idShopoingCart, @PathVariable Integer idOrderItem){
+    public ShoppingCart outProductByCarritoShoppingII(@PathVariable Integer idShopoingCart, @PathVariable Integer idOrderItem) throws Exception {
 
         restTemplate.delete("http://localhost:8080/orderitem/"+ idOrderItem.toString());
 
