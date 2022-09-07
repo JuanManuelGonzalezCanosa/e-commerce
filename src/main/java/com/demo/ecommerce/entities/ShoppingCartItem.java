@@ -18,7 +18,7 @@ public class ShoppingCartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer idOrderItem;
+    private Integer id;
 
     @OneToOne
     @MapsId
@@ -32,12 +32,12 @@ public class ShoppingCartItem {
         if (this == o) return true;
         if (!(o instanceof ShoppingCartItem)) return false;
         ShoppingCartItem shoppingCartItem = (ShoppingCartItem) o;
-        return quantity == shoppingCartItem.quantity && Objects.equals(idOrderItem, shoppingCartItem.idOrderItem) && Objects.equals(item, shoppingCartItem.item);
+        return quantity == shoppingCartItem.quantity && Objects.equals(id, shoppingCartItem.id) && Objects.equals(item, shoppingCartItem.item);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idOrderItem, item, quantity);
+        return Objects.hash(id, item, quantity);
     }
 
 
