@@ -28,9 +28,9 @@ public class ShoppingCartService {
     @Qualifier("IOrderItemRepository")
     private IOrderItemRepository repositoryIOrderItem;
 
-    @Autowired
-    @Qualifier("IShoppingCart")
-    private IShoppingCart iShoppingCart;
+    //@Autowired
+    //@Qualifier("IShoppingCart")
+    //private IShoppingCart iShoppingCart;
 
     public ShoppingCart createToCart(ShoppingCart shoppingCart) {
         return repository.save(shoppingCart);
@@ -77,7 +77,9 @@ public class ShoppingCartService {
 
     public boolean deleteShoppingCartId(ShoppingCart shoppingCart) throws Exception {
 
-        iShoppingCart.removeShopping(shoppingCart);
+        ShoppingCartProxy shoppingCartProxy = new ShoppingCartProxy(shoppingCart);
+
+        shoppingCartProxy.removeShopping();
 
         this.repository.delete(shoppingCart);
 
