@@ -20,17 +20,6 @@ public class ShoppingCartService {
     @Qualifier("IShoppingCartRepository")
     private IShoppingCartRepository repository;
 
-    @Autowired
-    private ModelMapper mapper;
-
-
-    @Autowired
-    @Qualifier("IOrderItemRepository")
-    private IOrderItemRepository repositoryIOrderItem;
-
-    //@Autowired
-    //@Qualifier("IShoppingCart")
-    //private IShoppingCart iShoppingCart;
 
     public ShoppingCart createToCart(ShoppingCart shoppingCart) {
         return repository.save(shoppingCart);

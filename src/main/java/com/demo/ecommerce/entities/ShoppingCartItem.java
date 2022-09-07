@@ -12,12 +12,12 @@ import java.util.Objects;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "OrderItem")
+@Table(name = "ShoppingCartItem")
 public class ShoppingCartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idProduct")
+    @Column(name = "id")
     private Integer idOrderItem;
 
     @OneToOne
