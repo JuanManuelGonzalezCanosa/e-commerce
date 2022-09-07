@@ -3,7 +3,7 @@ package com.demo.ecommerce.services;
 import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.exceptions.IdNotFound;
 import com.demo.ecommerce.exceptions.ListEmpty;
-import com.demo.ecommerce.repository.IOrderItemRepository;
+import com.demo.ecommerce.repository.IShoppingCartItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class OrderItemService {
+public class ShoppingCartItemService {
 
     @Autowired
-    @Qualifier("IOrderItemRepository")
-    private IOrderItemRepository repositoryIOrderItem;
+    @Qualifier("IShoppingCartItemRepository")
+    private IShoppingCartItemRepository repositoryIOrderItem;
 
 
     public ShoppingCartItem createOrderItem(ShoppingCartItem shoppingCartItem) {

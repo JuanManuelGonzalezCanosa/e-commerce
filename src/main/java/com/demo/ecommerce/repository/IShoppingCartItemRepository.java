@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-@Qualifier("IOrderItemRepository")
-public interface IOrderItemRepository extends JpaRepository<ShoppingCartItem, Integer> {
+@Qualifier("IShoppingCartItemRepository")
+public interface IShoppingCartItemRepository extends JpaRepository<ShoppingCartItem, Integer> {
 }

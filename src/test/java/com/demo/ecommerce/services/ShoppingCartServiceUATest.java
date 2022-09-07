@@ -1,10 +1,10 @@
 package com.demo.ecommerce.services;
 
-import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.entities.Product;
 import com.demo.ecommerce.entities.ShoppingCart;
-import com.demo.ecommerce.repository.IOrderItemRepository;
+import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.repository.IProductsRepository;
+import com.demo.ecommerce.repository.IShoppingCartItemRepository;
 import com.demo.ecommerce.repository.IShoppingCartRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +35,7 @@ public class ShoppingCartServiceUATest {
 
     @Autowired
     @Qualifier("IOrderItemRepository")
-    IOrderItemRepository repositoryOrderItem;
+    IShoppingCartItemRepository repositoryOrderItem;
     @Autowired
     ShoppingCartService shoppingCartService;
 

@@ -1,9 +1,9 @@
 package com.demo.ecommerce.controllers;
 
 import com.demo.ecommerce.dto.ShoppingCartDto;
-import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.entities.ShoppingCart;
-import com.demo.ecommerce.services.OrderItemService;
+import com.demo.ecommerce.entities.ShoppingCartItem;
+import com.demo.ecommerce.services.ShoppingCartItemService;
 import com.demo.ecommerce.services.ShoppingCartService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @RestController
+@RequestMapping("/shoppingCart")
 public class ShoppingCartController {
 
     private RestTemplate restTemplate;
@@ -25,7 +26,7 @@ public class ShoppingCartController {
     private ShoppingCartService service;
 
     @Autowired
-    private OrderItemService serviceOrderItem;
+    private ShoppingCartItemService serviceOrderItem;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -35,22 +36,22 @@ public class ShoppingCartController {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    @PostMapping("/createShoppingCart")
+    @PostMapping("/create")
     public ShoppingCart createToCart(@RequestBody ShoppingCart shoppingCart){
         return service.createToCart(shoppingCart);
     }
 
-    @GetMapping("/shoppingCart/all")
+    @GetMapping("/all")
     public List<ShoppingCart> lstShoppingCart(){
         return service.lstShoppingCart();
     }
 
-    @GetMapping("/shoppingCart/{id}")
+    @GetMapping("/{id}")
     public ShoppingCart getShoppingCartById(@PathVariable Integer id){
         return service.getShoppingCartById(id);
     }
 
-    @GetMapping("/shoppingCartDto/{id}")
+    @GetMapping("/dto/{id}")
     public ResponseEntity<ShoppingCartDto> getShoppingCartDtoById(@PathVariable Integer id){
         try{
             ShoppingCart shoppingCart = service.getShoppingCartById(id);
@@ -72,7 +73,7 @@ public class ShoppingCartController {
     }
 
 
-    @PostMapping("/addProductToShoppingCart/{id}")
+    @PostMapping("/add/{id}")
     public ShoppingCart addProductToShoppingCart(@RequestBody ShoppingCartItem shoppingCartItem, @PathVariable Integer id){
 
         try {
@@ -84,10 +85,10 @@ public class ShoppingCartController {
 
     }
 
-    @DeleteMapping("/outProductByShoppingCart/shoppingid/{idShopoingCart}/itemid/{idOrderItem}")
-    public ShoppingCart outProductByCarritoShoppingII(@PathVariable Integer idShopoingCart, @PathVariable Integer idOrderItem) throws Exception {
+    @DeleteMapping("/remove/shoppingid/{idShopoingCart}/itemid/{idOrderItem}")
+    public ShoppingCart removeShoppingCartItem(@PathVariable Integer idShopoingCart, @PathVariable Integer idOrderItem) throws Exception {
 
-        restTemplate.delete("http://localhost:8080/orderitem/"+ idOrderItem.toString());
+        restTemplate.delete("http://localhost:8080/orderitem/" + idOrderItem.toString());
 
         return service.outProductByCarritoShopping(idShopoingCart, idOrderItem);
     }

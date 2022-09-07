@@ -1,12 +1,9 @@
 package com.demo.ecommerce.services;
 
-import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.entities.ShoppingCart;
-import com.demo.ecommerce.repository.IOrderItemRepository;
+import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.repository.IShoppingCartRepository;
-import com.demo.ecommerce.util.IShoppingCart;
 import com.demo.ecommerce.util.ShoppingCartProxy;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

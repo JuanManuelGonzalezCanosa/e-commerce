@@ -20,8 +20,8 @@ public class ShoppingCartItem {
     @Column(name = "id")
     private Integer id;
 
+
     @OneToOne
-    @MapsId
     private Product item;
 
     @Column(name = "quantity")
