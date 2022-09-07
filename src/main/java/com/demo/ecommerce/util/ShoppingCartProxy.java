@@ -1,12 +1,11 @@
 package com.demo.ecommerce.util;
 
-import com.demo.ecommerce.entities.OrderItem;
+import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.exceptions.ErrorOrderItemIsNotEnabled;
 import com.demo.ecommerce.exceptions.ErrorQuantityProductNegative;
 import com.demo.ecommerce.exceptions.ShoppingCartFull;
 import com.demo.ecommerce.exceptions.StockEception;
-import com.demo.ecommerce.services.OrderItemService;
 
 public class ShoppingCartProxy implements IShoppingCart {
     private final ShoppingCart shoppingCart;
@@ -16,29 +15,29 @@ public class ShoppingCartProxy implements IShoppingCart {
     }
 
     @Override
-    public void addOrderItem(OrderItem orderItem) throws Exception {
+    public void addOrderItem(ShoppingCartItem shoppingCartItem) throws Exception {
 
         // CANTIDAD DE PRODUCTOS NEGATIVA
-        if (orderItem.getQuantity() < 0) {
+        if (shoppingCartItem.getQuantity() < 0) {
             throw new ErrorQuantityProductNegative();
         }
 
         //EL PRODUCTO NO ESTA HABILITADO
-        if (!orderItem.getItem().isEnabled()) {
+        if (!shoppingCartItem.getItem().isEnabled()) {
             throw new ErrorOrderItemIsNotEnabled();
         }
 
         //NO HAY STOCK
-        if (orderItem.getItem().getStock() < orderItem.getQuantity()) {
+        if (shoppingCartItem.getItem().getStock() < shoppingCartItem.getQuantity()) {
             throw new StockEception();
         }
             //TIENE DESCUENTO?
-        if (orderItem.getItem().isPromotion()) {
-            orderItem.getItem().setPrice(this.shoppingCart.getTotal() + (0.90 * ((orderItem.getItem().getPrice() *orderItem.getQuantity()))));
+        if (shoppingCartItem.getItem().isPromotion()) {
+            shoppingCartItem.getItem().setPrice(this.shoppingCart.getTotal() + (0.90 * ((shoppingCartItem.getItem().getPrice() * shoppingCartItem.getQuantity()))));
         }
 
-        this.shoppingCart.getLstOrderItem().add(orderItem);
-        this.shoppingCart.setTotal(this.shoppingCart.getTotal() + (orderItem.getItem().getPrice() *orderItem.getQuantity()));
+        this.shoppingCart.getLstShoppingCartItem().add(shoppingCartItem);
+        this.shoppingCart.setTotal(this.shoppingCart.getTotal() + (shoppingCartItem.getItem().getPrice() * shoppingCartItem.getQuantity()));
 
     }
 
@@ -46,15 +45,15 @@ public class ShoppingCartProxy implements IShoppingCart {
     @Override
     public void removerOrderItem(Integer idOrderItem) throws Exception{
 
-        OrderItem orderItem = this.shoppingCart.getLstOrderItem().get(idOrderItem);
-        this.shoppingCart.getLstOrderItem().removeIf((orderItem_ -> orderItem_.equals(orderItem)));
+        ShoppingCartItem shoppingCartItem = this.shoppingCart.getLstShoppingCartItem().get(idOrderItem);
+        this.shoppingCart.getLstShoppingCartItem().removeIf((orderItem_ -> orderItem_.equals(shoppingCartItem)));
 
-        this.shoppingCart.setTotal(this.shoppingCart.getTotal() - (orderItem.getItem().getPrice() *orderItem.getQuantity()));
+        this.shoppingCart.setTotal(this.shoppingCart.getTotal() - (shoppingCartItem.getItem().getPrice() * shoppingCartItem.getQuantity()));
     }
 
     public void removeShopping(ShoppingCart shoppingCart)throws Exception{
 
-        if(!shoppingCart.getLstOrderItem().isEmpty()){
+        if(!shoppingCart.getLstShoppingCartItem().isEmpty()){
             throw new ShoppingCartFull();
         }
 

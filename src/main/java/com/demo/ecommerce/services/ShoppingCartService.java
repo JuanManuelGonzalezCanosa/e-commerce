@@ -1,11 +1,7 @@
 package com.demo.ecommerce.services;
 
-import com.demo.ecommerce.entities.OrderItem;
+import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.entities.ShoppingCart;
-import com.demo.ecommerce.exceptions.ErrorOrderItemIsNotEnabled;
-import com.demo.ecommerce.exceptions.ErrorQuantityProductNegative;
-import com.demo.ecommerce.exceptions.ErrorShoppingCartIsNotEnabled;
-import com.demo.ecommerce.exceptions.StockEception;
 import com.demo.ecommerce.repository.IOrderItemRepository;
 import com.demo.ecommerce.repository.IShoppingCartRepository;
 import com.demo.ecommerce.util.IShoppingCart;
@@ -14,11 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ShoppingCartService {
@@ -54,21 +47,21 @@ public class ShoppingCartService {
     public boolean putShoppingCartById(ShoppingCart shoppingCart, Integer id) {
         ShoppingCart aux = this.getShoppingCartById(id);
 
-        aux.setLstOrderItem(shoppingCart.getLstOrderItem());
+        aux.setLstShoppingCartItem(shoppingCart.getLstShoppingCartItem());
         aux.setTotal(shoppingCart.getTotal());
         aux.setStatus(shoppingCart.isStatus());
 
         return true;
     }
 
-    public ShoppingCart addProductToShoppingCart(OrderItem orderItem, Integer id) throws Exception {
+    public ShoppingCart addProductToShoppingCart(ShoppingCartItem shoppingCartItem, Integer id) throws Exception {
 
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
         ShoppingCart shoppingCart = repository.findById(id).get(); //mock
 
         ShoppingCartProxy shoppingCartProxy = new ShoppingCartProxy(shoppingCart);
 
-        shoppingCartProxy.addOrderItem(orderItem);
+        shoppingCartProxy.addOrderItem(shoppingCartItem);
 
         return this.repository.save(shoppingCartProxy.getShoppingCart());
     }

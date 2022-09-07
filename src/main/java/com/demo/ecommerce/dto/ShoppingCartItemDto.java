@@ -1,6 +1,5 @@
 package com.demo.ecommerce.dto;
 
-import com.demo.ecommerce.entities.OrderItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class OrderItemDto {
+public class ShoppingCartItemDto {
 
     public Integer idProductDto;
 

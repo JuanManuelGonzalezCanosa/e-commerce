@@ -1,6 +1,6 @@
 package com.demo.ecommerce.controllers;
 
-import com.demo.ecommerce.entities.OrderItem;
+import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.services.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +16,12 @@ public class OrderItemController {
 
 
     @PostMapping("/create")
-    public OrderItem createOrderItem(@RequestBody OrderItem orderItem){
-        return serviceOrderItem.createOrderItem(orderItem);
+    public ShoppingCartItem createOrderItem(@RequestBody ShoppingCartItem shoppingCartItem){
+        return serviceOrderItem.createOrderItem(shoppingCartItem);
     }
 
     @GetMapping("/all")
-    public List<OrderItem> lstOrderItem(){
+    public List<ShoppingCartItem> lstOrderItem(){
         try {
             return serviceOrderItem.lstOrderItem();
         } catch (Exception e) {
@@ -30,7 +30,7 @@ public class OrderItemController {
     }
 
     @GetMapping("/{id}")
-    public OrderItem orderItemId(@PathVariable Integer id){
+    public ShoppingCartItem orderItemId(@PathVariable Integer id){
         try {
             return serviceOrderItem.getOrderItemById(id);
         } catch (Exception e) {
@@ -39,9 +39,9 @@ public class OrderItemController {
     }
 
     @PutMapping("/put/{id}")
-    public OrderItem putOrderItemById(@RequestBody OrderItem orderItem, @PathVariable Integer id){
+    public ShoppingCartItem putOrderItemById(@RequestBody ShoppingCartItem shoppingCartItem, @PathVariable Integer id){
         try {
-            return serviceOrderItem.putOrderItemById(orderItem, id);
+            return serviceOrderItem.putOrderItemById(shoppingCartItem, id);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

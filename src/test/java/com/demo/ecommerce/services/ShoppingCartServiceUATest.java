@@ -1,6 +1,6 @@
 package com.demo.ecommerce.services;
 
-import com.demo.ecommerce.entities.OrderItem;
+import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.entities.Product;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.repository.IOrderItemRepository;
@@ -47,10 +47,10 @@ public class ShoppingCartServiceUATest {
 
         Product product = new Product(1, "Sandia", "Fruta", 200, "asd", 250, true, true);
         repositoryProduct.save(product);
-        OrderItem orderItem = new OrderItem(1, product, 20);
-        repositoryOrderItem.save(orderItem);
-        List<OrderItem> list = new ArrayList<>();
-        list.add(orderItem);
+        ShoppingCartItem shoppingCartItem = new ShoppingCartItem(1, product, 20);
+        repositoryOrderItem.save(shoppingCartItem);
+        List<ShoppingCartItem> list = new ArrayList<>();
+        list.add(shoppingCartItem);
         this.shoppingCart = new ShoppingCart(1, list, 4500.0, true);
 
         repository.save(shoppingCart);
@@ -63,7 +63,7 @@ public class ShoppingCartServiceUATest {
         //given:
         Product product = new Product(2, "tomate", "fruta", 10, "asd", 10, true, true);
         repositoryProduct.save(product);
-        OrderItem newOrder = new OrderItem(2, product, 2);
+        ShoppingCartItem newOrder = new ShoppingCartItem(2, product, 2);
         repositoryOrderItem.save(newOrder);
         Integer shoppingCart = 1;
 

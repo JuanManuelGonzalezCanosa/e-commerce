@@ -1,6 +1,6 @@
 package com.demo.ecommerce.dto;
 
-import com.demo.ecommerce.entities.OrderItem;
+import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -13,28 +13,28 @@ import java.util.stream.Collectors;
 public class ShoppingCartDto {
 
     public Integer id;
-    public List<OrderItemDto> lstOrderItemDto = new ArrayList<>();
+    public List<ShoppingCartItemDto> lstShoppingCartItemDto = new ArrayList<>();
     public double total;
 
-    private TypeMap<OrderItem, OrderItemDto> orderToDto;
+    private TypeMap<ShoppingCartItem, ShoppingCartItemDto> orderToDto;
     private ModelMapper modelMapper = new ModelMapper();
 
     public ShoppingCartDto() {
 
-        orderToDto = modelMapper.createTypeMap(OrderItem.class, OrderItemDto.class);
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getName(), OrderItemDto::setNameDto));
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getDescription(), OrderItemDto::setDescriptionDto));
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getPrice(), OrderItemDto::setPriceDto));
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().isPromotion(), OrderItemDto::setPromotionDto));
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getId(), OrderItemDto::setIdProductDto));
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getQuantity(), OrderItemDto::setQuantityDto));
+        orderToDto = modelMapper.createTypeMap(ShoppingCartItem.class, ShoppingCartItemDto.class);
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getName(), ShoppingCartItemDto::setNameDto));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getDescription(), ShoppingCartItemDto::setDescriptionDto));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getPrice(), ShoppingCartItemDto::setPriceDto));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().isPromotion(), ShoppingCartItemDto::setPromotionDto));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getId(), ShoppingCartItemDto::setIdProductDto));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getQuantity(), ShoppingCartItemDto::setQuantityDto));
     }
 
-    public void setLstOrderItemDto(List<OrderItem> list) {
-        this.lstOrderItemDto = list.stream().map((orderItem -> {
-            OrderItemDto orderItemDto = new OrderItemDto();
-            modelMapper.map(orderItem, orderItemDto);
-            return orderItemDto;
+    public void setLstOrderItemDto(List<ShoppingCartItem> list) {
+        this.lstShoppingCartItemDto = list.stream().map((orderItem -> {
+            ShoppingCartItemDto shoppingCartItemDto = new ShoppingCartItemDto();
+            modelMapper.map(orderItem, shoppingCartItemDto);
+            return shoppingCartItemDto;
         })).collect(Collectors.toList());
     }
 
@@ -47,7 +47,7 @@ public class ShoppingCartDto {
     }
 
     @JsonProperty("items")
-    public List<OrderItemDto> getLstOrderItemDto() {
-        return lstOrderItemDto;
+    public List<ShoppingCartItemDto> getLstOrderItemDto() {
+        return lstShoppingCartItemDto;
     }
 }

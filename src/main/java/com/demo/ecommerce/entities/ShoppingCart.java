@@ -22,7 +22,7 @@ public class ShoppingCart {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Column(name = "lstProduct", nullable = true)
-    private List<OrderItem> lstOrderItem;
+    private List<ShoppingCartItem> lstShoppingCartItem;
 
     @Column(name = "total", nullable = true)
     private Double total;
@@ -37,12 +37,12 @@ public class ShoppingCart {
         if (this == o) return true;
         if (!(o instanceof ShoppingCart)) return false;
         ShoppingCart that = (ShoppingCart) o;
-        return status == that.status && Objects.equals(idShoppingCart, that.idShoppingCart) && Objects.equals(lstOrderItem, that.lstOrderItem) && Objects.equals(total, that.total);
+        return status == that.status && Objects.equals(idShoppingCart, that.idShoppingCart) && Objects.equals(lstShoppingCartItem, that.lstShoppingCartItem) && Objects.equals(total, that.total);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idShoppingCart, lstOrderItem, total, status);
+        return Objects.hash(idShoppingCart, lstShoppingCartItem, total, status);
     }
 
 

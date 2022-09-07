@@ -13,7 +13,7 @@ import java.util.Objects;
 @Data
 @Entity
 @Table(name = "OrderItem")
-public class OrderItem {
+public class ShoppingCartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +30,9 @@ public class OrderItem {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof OrderItem)) return false;
-        OrderItem orderItem = (OrderItem) o;
-        return quantity == orderItem.quantity && Objects.equals(idOrderItem, orderItem.idOrderItem) && Objects.equals(item, orderItem.item);
+        if (!(o instanceof ShoppingCartItem)) return false;
+        ShoppingCartItem shoppingCartItem = (ShoppingCartItem) o;
+        return quantity == shoppingCartItem.quantity && Objects.equals(idOrderItem, shoppingCartItem.idOrderItem) && Objects.equals(item, shoppingCartItem.item);
     }
 
     @Override

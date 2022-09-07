@@ -1,7 +1,6 @@
 package com.demo.ecommerce.services;
 
-import com.demo.ecommerce.entities.OrderItem;
-import com.demo.ecommerce.entities.Product;
+import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.exceptions.IdNotFound;
 import com.demo.ecommerce.exceptions.ListEmpty;
 import com.demo.ecommerce.repository.IOrderItemRepository;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderItemService {
@@ -20,13 +18,13 @@ public class OrderItemService {
     private IOrderItemRepository repositoryIOrderItem;
 
 
-    public OrderItem createOrderItem(OrderItem orderItem) {
+    public ShoppingCartItem createOrderItem(ShoppingCartItem shoppingCartItem) {
 
         //verificar que este activo.
-        return repositoryIOrderItem.save(orderItem);
+        return repositoryIOrderItem.save(shoppingCartItem);
     }
 
-    public List<OrderItem> lstOrderItem() throws Exception {
+    public List<ShoppingCartItem> lstOrderItem() throws Exception {
 
         if(repositoryIOrderItem.findAll().isEmpty()){
             throw new Exception(new ListEmpty().getMessage());
@@ -35,7 +33,7 @@ public class OrderItemService {
         return repositoryIOrderItem.findAll();
     }
 
-    public OrderItem getOrderItemById(Integer id) throws Exception {
+    public ShoppingCartItem getOrderItemById(Integer id) throws Exception {
 
         if(!repositoryIOrderItem.findById(id).isPresent()){
             throw new Exception(new IdNotFound().getMessage());
@@ -45,12 +43,12 @@ public class OrderItemService {
     }
 
 
-    public OrderItem putOrderItemById(OrderItem orderItem, Integer id) throws Exception {
+    public ShoppingCartItem putOrderItemById(ShoppingCartItem shoppingCartItem, Integer id) throws Exception {
 
-        OrderItem aux = this.getOrderItemById(id);
+        ShoppingCartItem aux = this.getOrderItemById(id);
 
-        aux.setItem(orderItem.getItem());
-        aux.setQuantity(orderItem.getQuantity());
+        aux.setItem(shoppingCartItem.getItem());
+        aux.setQuantity(shoppingCartItem.getQuantity());
 
         return repositoryIOrderItem.save(aux);
     }

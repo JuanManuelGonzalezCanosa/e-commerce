@@ -1,7 +1,7 @@
 package com.demo.ecommerce.controllers;
 
 import com.demo.ecommerce.dto.ShoppingCartDto;
-import com.demo.ecommerce.entities.OrderItem;
+import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.services.OrderItemService;
 import com.demo.ecommerce.services.ShoppingCartService;
@@ -57,7 +57,7 @@ public class ShoppingCartController {
             ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
 
             TypeMap<ShoppingCart, ShoppingCartDto> mapperShopping = modelMapper.createTypeMap(ShoppingCart.class, ShoppingCartDto.class);
-            mapperShopping.addMappings(mapper -> mapper.map(ShoppingCart::getLstOrderItem, ShoppingCartDto::setLstOrderItemDto));
+            mapperShopping.addMappings(mapper -> mapper.map(ShoppingCart::getLstShoppingCartItem, ShoppingCartDto::setLstOrderItemDto));
             mapperShopping.addMappings(mapper -> mapper.map(ShoppingCart::getTotal, ShoppingCartDto::setTotal));
             mapperShopping.addMappings(mapper -> mapper.map(ShoppingCart::getIdShoppingCart, ShoppingCartDto::setId));
 
@@ -73,10 +73,10 @@ public class ShoppingCartController {
 
 
     @PostMapping("/addProductToShoppingCart/{id}")
-    public ShoppingCart addProductToShoppingCart(@RequestBody OrderItem orderItem, @PathVariable Integer id){
+    public ShoppingCart addProductToShoppingCart(@RequestBody ShoppingCartItem shoppingCartItem, @PathVariable Integer id){
 
         try {
-            return service.addProductToShoppingCart(orderItem, id);
+            return service.addProductToShoppingCart(shoppingCartItem, id);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
