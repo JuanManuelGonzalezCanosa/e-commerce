@@ -3,21 +3,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table (name="Product")
+@Table (name="product")
 public class Product {
 
     @Id
-    @Column(name = "id", nullable = false)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -32,14 +30,37 @@ public class Product {
     private String photoURL;
 
     @Column(name = "price", nullable = false)
-    private long price;
+    private double price;
 
-    @Column(name = "isEnabled", nullable = false)
-    private boolean isEnabled;
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
 
-    @Column(name = "isPromotion", nullable = false)
-    private boolean isPromotion;
+    @Column(name = "promotion", nullable = false)
+    private boolean promotion;
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        return stock == product.stock && Double.compare(product.price, price) == 0 && enabled == product.enabled && promotion == product.promotion && Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(photoURL, product.photoURL);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, stock, photoURL, price, enabled, promotion);
+    }
+
+    public Product(String name, String description, int stock, String photoURL, double price, boolean enabled, boolean promotion) {
+        this.name = name;
+        this.description = description;
+        this.stock = stock;
+        this.photoURL = photoURL;
+        this.price = price;
+        this.enabled = enabled;
+        this.promotion = promotion;
+    }
 }
+
+
