@@ -1,5 +1,6 @@
 package com.demo.ecommerce.services;
 
+import com.demo.ecommerce.entities.Product;
 import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.exceptions.IdNotFound;
 import com.demo.ecommerce.exceptions.ListEmpty;
@@ -18,10 +19,14 @@ public class ShoppingCartItemService {
     private IShoppingCartItemRepository repositoryIOrderItem;
 
 
-    public ShoppingCartItem createOrderItem(ShoppingCartItem shoppingCartItem) {
+    public ShoppingCartItem createOrderItem(Product product, Integer quantity) {
+        ShoppingCartItem aux = null;
 
-        //verificar que este activo.
-        return repositoryIOrderItem.save(shoppingCartItem);
+        aux.setItem(product);
+        aux.setQuantity(quantity);
+
+
+        return repositoryIOrderItem.save(aux);
     }
 
     public List<ShoppingCartItem> lstOrderItem() throws Exception {

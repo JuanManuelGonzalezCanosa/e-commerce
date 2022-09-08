@@ -1,9 +1,13 @@
 package com.demo.ecommerce.controllers;
 
+import com.demo.ecommerce.entities.Product;
 import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.services.ShoppingCartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -15,10 +19,21 @@ public class ShoppingCartItemController {
     @Autowired
     private ShoppingCartItemService service;
 
+    private RestTemplate restTemplate;
 
-    @PostMapping("/create")
-    public ShoppingCartItem createOrderItem(@RequestBody ShoppingCartItem shoppingCartItem) {
-        return service.createOrderItem(shoppingCartItem);
+    @Autowired
+    public ShoppingCartItemController(RestTemplateBuilder restTemplateBuilder) {
+        this.restTemplate = restTemplateBuilder.build();
+    }
+
+
+    @PostMapping("/create/idProduct/{idProduct}/quantity/{quantity}")
+    public ResponseEntity<?> createOrderItem(@PathVariable Integer idProduct, @PathVariable Integer quantity) {
+        // ENTIDAD O OBJETO???
+        Product product = restTemplate.getForEntity("http://localhost:8080/product/"+ idProduct.toString(), Product.class);
+
+
+        return service.createOrderItem(product, quantity);
     }
 
     @GetMapping("/all")
@@ -49,7 +64,7 @@ public class ShoppingCartItemController {
     }
 
     //HACERLO DE TIPO RESPONSE ENTITY
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public boolean deleteOrderItem(@PathVariable Integer id){
 
         try {
