@@ -33,7 +33,8 @@ public class ShoppingCartProxy implements IShoppingCart {
         }
             //TIENE DESCUENTO?
         if (shoppingCartItem.getItem().isPromotion()) {
-            shoppingCartItem.getItem().setPrice(this.shoppingCart.getTotal() + (0.90 * ((shoppingCartItem.getItem().getPrice() * shoppingCartItem.getQuantity()))));
+            //shoppingCartItem.getItem().setPrice(this.shoppingCart.getTotal() + (0.90 * ((shoppingCartItem.getItem().getPrice() * shoppingCartItem.getQuantity()))));
+            shoppingCartItem.getItem().setPrice(shoppingCartItem.getItem().getPrice() * 0.9);
         }
 
         this.shoppingCart.getLstShoppingCartItem().add(shoppingCartItem);

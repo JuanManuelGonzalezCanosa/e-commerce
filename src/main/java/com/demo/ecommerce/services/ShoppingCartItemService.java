@@ -1,11 +1,13 @@
 package com.demo.ecommerce.services;
 
+import com.demo.ecommerce.entities.Product;
 import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.exceptions.IdNotFound;
 import com.demo.ecommerce.exceptions.ListEmpty;
 import com.demo.ecommerce.repository.IShoppingCartItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +20,15 @@ public class ShoppingCartItemService {
     private IShoppingCartItemRepository repositoryIOrderItem;
 
 
-    public ShoppingCartItem createOrderItem(ShoppingCartItem shoppingCartItem) {
+    public ShoppingCartItem createShoppingCartItem(Product product, Integer quantity) {
+        ShoppingCartItem aux = new ShoppingCartItem();
 
-        //verificar que este activo.
-        return repositoryIOrderItem.save(shoppingCartItem);
+
+        aux.setItem(product);
+        aux.setQuantity(quantity);
+
+
+        return repositoryIOrderItem.save(aux);
     }
 
     public List<ShoppingCartItem> lstOrderItem() throws Exception {

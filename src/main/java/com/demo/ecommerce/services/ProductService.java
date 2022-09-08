@@ -15,11 +15,7 @@ public class ProductService {
     @Autowired
     private IProductsRepository repository;
 
-    public Product createProduct(Product product) {
-
-        //verificar que este activo.
-        return repository.save(product);
-    }
+    public Product createProduct(Product product) {return repository.save(product);}
 
     public List<Product> lstProduct() {
         return repository.findAll();
