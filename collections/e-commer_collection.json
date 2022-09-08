@@ -1,0 +1,318 @@
+{
+  "info": {
+    "_postman_id": "9fa04a99-ec0e-4dfc-9924-bb5eff1588da",
+    "name": "Neoris Practica",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "7548988"
+  },
+  "item": [
+    {
+      "name": "Product",
+      "item": [
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"coca\",\r\n    \"description\": \"gaseosa\",\r\n    \"stock\": 200,\r\n    \"photoURL\": \"asd\",\r\n    \"price\": 250,\r\n    \"enabled\": true,\r\n    \"promotion\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/createProduct",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "createProduct"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/product/all",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "product",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Sandia\",\r\n    \"description\": \"Fruta\",\r\n    \"stock\": 200,\r\n    \"photoURL\": \"asd\",\r\n    \"price\": 250,\r\n    \"enabled\": true,\r\n    \"promotion\": true\r\n}"
+            },
+            "url": {
+              "raw": "localhost:8080/putProduct/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "putProduct",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "OrderItem",
+      "item": [
+        {
+          "name": "Create OrderItem",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \r\n    \"item\": {\r\n    \"id\": 1,\r\n    \"name\": \"coca\",\r\n    \"description\": \"gaseosa\",\r\n    \"stock\": 200,\r\n    \"photoURL\": \"asd\",\r\n    \"price\": 250.0,\r\n    \"enabled\": true,\r\n    \"promotion\": true\r\n    },\r\n    \"quantity\":10\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/shoppingcartitem/create",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "shoppingcartitem",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ShoppingCart",
+      "item": [
+        {
+          "name": "Create ShoppingCart",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"lstShoppingCartItem\": [],\r\n    \"total\": 0,\r\n    \"status\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/shoppingCart/create",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "shoppingCart",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All ShoppingCart",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get ShoppingCart ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/shoppingCart/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "shoppingCart",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Product to ShoppingCart",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": 1,\r\n    \"item\": {\r\n    \"id\": 1,\r\n    \"name\": \"coca\",\r\n    \"description\": \"gaseosa\",\r\n    \"stock\": 200,\r\n    \"photoURL\": \"asd\",\r\n    \"price\": 250.0,\r\n    \"enabled\": true,\r\n    \"promotion\": true\r\n    },\r\n    \"quantity\":10\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/shoppingCart/add/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "shoppingCart",
+                "add",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get ShoppingCartDto ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/shoppingCart/dto/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "shoppingCart",
+                "dto",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Product To ShoppingCart",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "localhost:8080/outProductByShoppingCart/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "outProductByShoppingCart",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

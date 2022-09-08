@@ -3,7 +3,6 @@ package com.demo.ecommerce.controllers;
 import com.demo.ecommerce.dto.ShoppingCartDto;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.entities.ShoppingCartItem;
-import com.demo.ecommerce.services.ShoppingCartItemService;
 import com.demo.ecommerce.services.ShoppingCartService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -25,11 +24,6 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartService service;
 
-    @Autowired
-    private ShoppingCartItemService serviceOrderItem;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Autowired
     public ShoppingCartController(RestTemplateBuilder restTemplateBuilder) {
@@ -56,7 +50,7 @@ public class ShoppingCartController {
         try{
             ShoppingCart shoppingCart = service.getShoppingCartById(id);
             ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
-
+            ModelMapper modelMapper = new ModelMapper();
             TypeMap<ShoppingCart, ShoppingCartDto> mapperShopping = modelMapper.createTypeMap(ShoppingCart.class, ShoppingCartDto.class);
             mapperShopping.addMappings(mapper -> mapper.map(ShoppingCart::getLstShoppingCartItem, ShoppingCartDto::setLstOrderItemDto));
             mapperShopping.addMappings(mapper -> mapper.map(ShoppingCart::getTotal, ShoppingCartDto::setTotal));

@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class ShoppingCartDto {
 
     public Integer id;
+    @JsonProperty("items")
     public List<ShoppingCartItemDto> lstShoppingCartItemDto = new ArrayList<>();
     public double total;
 
@@ -22,12 +23,12 @@ public class ShoppingCartDto {
     public ShoppingCartDto() {
 
         orderToDto = modelMapper.createTypeMap(ShoppingCartItem.class, ShoppingCartItemDto.class);
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getName(), ShoppingCartItemDto::setNameDto));
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getDescription(), ShoppingCartItemDto::setDescriptionDto));
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getPrice(), ShoppingCartItemDto::setPriceDto));
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().isPromotion(), ShoppingCartItemDto::setPromotionDto));
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getId(), ShoppingCartItemDto::setIdProductDto));
-        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getQuantity(), ShoppingCartItemDto::setQuantityDto));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getName(), ShoppingCartItemDto::setName));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getDescription(), ShoppingCartItemDto::setDescription));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getPrice(), ShoppingCartItemDto::setPrice));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().isPromotion(), ShoppingCartItemDto::setPromotion));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getItem().getId(), ShoppingCartItemDto::setId));
+        orderToDto.addMappings(mapper -> mapper.map(orderItem -> orderItem.getQuantity(), ShoppingCartItemDto::setQuantity));
     }
 
     public void setLstOrderItemDto(List<ShoppingCartItem> list) {
@@ -46,8 +47,15 @@ public class ShoppingCartDto {
         this.total = total;
     }
 
-    @JsonProperty("items")
-    public List<ShoppingCartItemDto> getLstOrderItemDto() {
+    public Integer getId() {
+        return id;
+    }
+
+    public List<ShoppingCartItemDto> getLstShoppingCartItemDto() {
         return lstShoppingCartItemDto;
+    }
+
+    public double getTotal() {
+        return total;
     }
 }

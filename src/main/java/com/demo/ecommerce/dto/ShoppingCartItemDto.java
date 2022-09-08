@@ -9,16 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class ShoppingCartItemDto {
 
-    public Integer idProductDto;
-
-    public String nameDto;
-
-    public String descriptionDto;
-
-    public double priceDto;
-
-    public int quantityDto;
-
-    public boolean promotionDto;
-
+    public Integer id;
+    public String name;
+    public String description;
+    public double price;
+    public int quantity;
+    public boolean promotion;
 }

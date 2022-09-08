@@ -22,6 +22,7 @@ public class ShoppingCartItem {
 
 
     @OneToOne
+    @JoinColumn(name = "FK_CART_ITEM", updatable = false, nullable = false)
     private Product item;
 
     @Column(name = "quantity")
