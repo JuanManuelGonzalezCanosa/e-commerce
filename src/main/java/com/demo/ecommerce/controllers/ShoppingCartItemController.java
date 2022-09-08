@@ -28,12 +28,16 @@ public class ShoppingCartItemController {
 
 
     @PostMapping("/create/idProduct/{idProduct}/quantity/{quantity}")
-    public ResponseEntity<?> createOrderItem(@PathVariable Integer idProduct, @PathVariable Integer quantity) {
-        // ENTIDAD O OBJETO???
-        Product product = restTemplate.getForEntity("http://localhost:8080/product/"+ idProduct.toString(), Product.class);
+    public ResponseEntity<?> createShoppingCartItem(@PathVariable Integer idProduct, @PathVariable Integer quantity) {
+        ResponseEntity<Product> response = restTemplate.getForEntity("http://localhost:8080/product/"+ idProduct.toString(), Product.class);
 
+        if(response.getStatusCode().value() >= 200 && response.getStatusCode().value() < 300){
+            Product product = response.getBody();
+            service.createShoppingCartItem(product, quantity);
+            return ResponseEntity.ok().body("Ok");
+        }
 
-        return service.createOrderItem(product, quantity);
+        return ResponseEntity.badRequest().body("Error Producto no Encontrado");
     }
 
     @GetMapping("/all")
