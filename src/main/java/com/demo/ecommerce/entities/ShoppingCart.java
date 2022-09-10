@@ -32,6 +32,11 @@ public class ShoppingCart {
 
 
 
+
+
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

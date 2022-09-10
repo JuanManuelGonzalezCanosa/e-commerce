@@ -1,11 +1,13 @@
 package com.demo.ecommerce.entities;
 
 
+import com.demo.ecommerce.enumerados.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,11 +30,12 @@ public class User {
     @Column(name = "active")
     private boolean active;
 
-    @OneToOne
-    @JoinColumn(name = "FK_ROLES", updatable = false, nullable = false)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Column(name = "shoppingCart")
+    private List<ShoppingCart> shoppingCart;
+
+    @Enumerated(EnumType.STRING)
     private Roles rol;
 
-    @OneToOne
-    @JoinColumn(name = "FK_SHOOPING_CART_ITEM", updatable = false, nullable = false)
-    private ShoppingCart shoppingCart;
+
 }
