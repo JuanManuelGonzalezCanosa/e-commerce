@@ -3,6 +3,8 @@ package com.demo.ecommerce.services;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.entities.User;
 import com.demo.ecommerce.repository.IUserRepository;
+import com.demo.ecommerce.util.ShoppingCartProxy;
+import com.demo.ecommerce.util.UserProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -43,15 +45,29 @@ public class UserService {
     }
 
     public boolean deleteUserById(Integer id){
+
+
         repository.deleteById(id);
         return true;
     }
 
-    public User userAddShoppingCart(Integer idUser, ShoppingCart shoppingCart){
-        User aux = this.getUserById(idUser);
+    public User userAddShoppingCart(Integer idUser, ShoppingCart shoppingCart) throws Exception {
+        User user = this.getUserById(idUser);
+        UserProxy userProxy = new UserProxy(user);
 
-        aux.getShoppingCart().add(shoppingCart);
+        userProxy.addShoppingCart(shoppingCart);
 
-        return repository.save(aux);
+        return repository.save(userProxy.getUser());
+    }
+
+    public boolean deleteShoppingCartToUser(Integer id) throws Exception {
+        User user = this.getUserById(id);
+        UserProxy userProxy = new UserProxy(user);
+
+        userProxy.removeShoppingCart(user);
+
+        repository.delete(user);
+
+        return true;
     }
 }

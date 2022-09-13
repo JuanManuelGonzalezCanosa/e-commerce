@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User userAddShoppingCart(@PathVariable Integer idUser, @PathVariable Integer idShoppingCart){
+    public User userAddShoppingCart(@PathVariable Integer idUser, @PathVariable Integer idShoppingCart) throws Exception {
         ResponseEntity<ShoppingCart> response = restTemplate.getForEntity("http://localhost:8080/shoppingCart/"+ idShoppingCart.toString(), ShoppingCart.class);
         ShoppingCart shoppingCart = response.getBody();
 
