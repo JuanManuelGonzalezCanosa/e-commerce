@@ -3,11 +3,13 @@ package com.demo.ecommerce.controllers;
 import com.demo.ecommerce.dto.ShoppingCartDto;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.entities.ShoppingCartItem;
+import com.demo.ecommerce.entities.User;
 import com.demo.ecommerce.services.ShoppingCartService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -68,16 +70,26 @@ public class ShoppingCartController {
 
 
     @PostMapping("/add/{id}")
-    public ShoppingCart addProductToShoppingCart(@RequestBody ShoppingCartItem shoppingCartItem, @PathVariable Integer id){
+    public ShoppingCart addProductToShoppingCart(@RequestHeader(HttpHeaders.ACCEPT_LANGUAGE) String userId, @RequestBody ShoppingCartItem shoppingCartItem, @PathVariable Integer id){
 
         try {
-            return service.addProductToShoppingCart(shoppingCartItem, id);
+            ResponseEntity<User> aux = restTemplate.getForEntity("/user/" + userId.toString(), User.class);
+            User user = aux.getBody();
+            return service.addProductToShoppingCart(user, shoppingCartItem, id);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
 
     }
+
+    /*
+        @GetMapping("/greeting")
+    public ResponseEntity<String> greeting(@RequestHeader(HttpHeaders.ACCEPT_LANGUAGE) String language) {
+        // code that uses the language variable
+        return new ResponseEntity<String>(greeting, HttpStatus.OK);
+    }
+     */
 
     @DeleteMapping("/remove/shoppingid/{idShopoingCart}/itemid/{idOrderItem}")
     public ShoppingCart removeShoppingCartItem(@PathVariable Integer idShopoingCart, @PathVariable Integer idOrderItem) throws Exception {

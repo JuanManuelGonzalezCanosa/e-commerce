@@ -2,8 +2,10 @@ package com.demo.ecommerce.services;
 
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.entities.ShoppingCartItem;
+import com.demo.ecommerce.entities.User;
 import com.demo.ecommerce.repository.IShoppingCartRepository;
 import com.demo.ecommerce.util.ShoppingCartProxy;
+import com.demo.ecommerce.util.UserProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -40,16 +42,16 @@ public class ShoppingCartService {
         return true;
     }
 
-    public ShoppingCart addProductToShoppingCart(ShoppingCartItem shoppingCartItem, Integer id) throws Exception {
+    public ShoppingCart addProductToShoppingCart(User user, ShoppingCartItem shoppingCartItem, Integer id) throws Exception {
 
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
         ShoppingCart shoppingCart = repository.findById(id).get(); //mock
 
-        ShoppingCartProxy shoppingCartProxy = new ShoppingCartProxy(shoppingCart);
+        UserProxy userCartProxy = new UserProxy(user, shoppingCart);
 
-        shoppingCartProxy.addOrderItem(shoppingCartItem);
+        userCartProxy.addOrderItem(shoppingCartItem);
 
-        return this.repository.save(shoppingCartProxy.getShoppingCart());
+        return this.repository.save(userCartProxy.getShoppingCart());
     }
 
     public ShoppingCart outProductByCarritoShopping(Integer idShopoingCart, Integer idOrderItem) throws Exception {

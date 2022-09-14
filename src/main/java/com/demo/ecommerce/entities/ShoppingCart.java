@@ -30,25 +30,20 @@ public class ShoppingCart {
     @Column(name = "status", nullable = true)
     private boolean status;
 
-
-
-
-
-
+    @OneToOne
+    private User user;
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ShoppingCart)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         ShoppingCart that = (ShoppingCart) o;
-        return status == that.status && Objects.equals(idShoppingCart, that.idShoppingCart) && Objects.equals(lstShoppingCartItem, that.lstShoppingCartItem) && Objects.equals(total, that.total);
+        return status == that.status && Objects.equals(idShoppingCart, that.idShoppingCart) && Objects.equals(lstShoppingCartItem, that.lstShoppingCartItem) && Objects.equals(total, that.total) && Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idShoppingCart, lstShoppingCartItem, total, status);
+        return Objects.hash(idShoppingCart, lstShoppingCartItem, total, status, user);
     }
-
-
 }

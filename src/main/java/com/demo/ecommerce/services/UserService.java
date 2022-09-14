@@ -53,16 +53,16 @@ public class UserService {
 
     public User userAddShoppingCart(Integer idUser, ShoppingCart shoppingCart) throws Exception {
         User user = this.getUserById(idUser);
-        UserProxy userProxy = new UserProxy(user);
+        UserProxy userProxy = new UserProxy(user, shoppingCart);
 
         userProxy.addShoppingCart(shoppingCart);
 
         return repository.save(userProxy.getUser());
     }
 
-    public boolean deleteShoppingCartToUser(Integer id) throws Exception {
-        User user = this.getUserById(id);
-        UserProxy userProxy = new UserProxy(user);
+    public boolean deleteShoppingCartToUser(Integer idUser, ShoppingCart ShoppingCart) throws Exception {
+        User user = this.getUserById(idUser);
+        UserProxy userProxy = new UserProxy(user, ShoppingCart);
 
         userProxy.removeShoppingCart(user);
 
@@ -70,4 +70,6 @@ public class UserService {
 
         return true;
     }
+
+
 }
