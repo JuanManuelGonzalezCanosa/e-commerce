@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 
-@RequestMapping("/shoppingcartitem")
+@RequestMapping("/shoppingCartItem")
 @RestController
 public class ShoppingCartItemController {
 
@@ -67,7 +67,6 @@ public class ShoppingCartItemController {
         }
     }
 
-    //HACERLO DE TIPO RESPONSE ENTITY
     @DeleteMapping("/delete/{id}")
     public boolean deleteOrderItem(@PathVariable Integer id){
 

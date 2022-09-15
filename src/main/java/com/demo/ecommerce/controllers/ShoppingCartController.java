@@ -70,11 +70,13 @@ public class ShoppingCartController {
 
 
     @PostMapping("/add/{id}")
-    public ShoppingCart addProductToShoppingCart(@RequestHeader(HttpHeaders.ACCEPT_LANGUAGE) String userId, @RequestBody ShoppingCartItem shoppingCartItem, @PathVariable Integer id){
+    public ShoppingCart addProductToShoppingCart(@RequestHeader(HttpHeaders.ACCEPT_LANGUAGE) String userId, @PathVariable Integer shoppingCartItemId, @PathVariable Integer id){
 
         try {
             ResponseEntity<User> aux = restTemplate.getForEntity("/user/" + userId.toString(), User.class);
             User user = aux.getBody();
+            ResponseEntity<ShoppingCartItem> auxShopping = restTemplate.getForEntity("/shoppingCartItem/" + shoppingCartItemId.toString(), ShoppingCartItem.class);
+            ShoppingCartItem shoppingCartItem = auxShopping.getBody();
             return service.addProductToShoppingCart(user, shoppingCartItem, id);
         } catch (Exception e) {
             throw new RuntimeException(e);
