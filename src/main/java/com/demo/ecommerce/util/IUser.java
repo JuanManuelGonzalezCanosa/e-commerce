@@ -6,6 +6,6 @@ import com.demo.ecommerce.entities.User;
 
 public interface IUser {
 
-    void addShoppingCart(ShoppingCart shoppingCart) throws Exception;
-    void removeShoppingCart(User user) throws Exception;
+    void addShoppingCart(User user, ShoppingCart shoppingCart) throws Exception;
+    void removeShoppingCart(User user, ShoppingCart shoppingCart) throws Exception;
 }

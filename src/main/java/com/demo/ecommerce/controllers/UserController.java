@@ -51,12 +51,22 @@ public class UserController {
         return service.deleteUserById(id);
     }
 
-    @PostMapping
+    @PostMapping("/addShoppingCart/idUser/{idUser}/idShoppingCart/{idShoppingCart}")
     public User userAddShoppingCart(@PathVariable Integer idUser, @PathVariable Integer idShoppingCart) throws Exception {
         ResponseEntity<ShoppingCart> response = restTemplate.getForEntity("http://localhost:8080/shoppingCart/"+ idShoppingCart.toString(), ShoppingCart.class);
         ShoppingCart shoppingCart = response.getBody();
 
         return service.userAddShoppingCart(idUser, shoppingCart);
+    }
+
+    @DeleteMapping("/removeShoppingCart/idUser/{idUser}/idShoppingCart/{idShoppingCart}")
+    public boolean removeShoppingCartToUser(@PathVariable Integer idUser, @PathVariable Integer idShoppingCart) throws Exception {
+        ResponseEntity<ShoppingCart> responseShopping = restTemplate.getForEntity("http://localhost:8080/" + idShoppingCart.toString(), ShoppingCart.class);
+        ShoppingCart shoppingCart = responseShopping.getBody();
+
+        service.removeShoppingCartToUser(idUser, shoppingCart);
+
+        return true;
     }
 
 

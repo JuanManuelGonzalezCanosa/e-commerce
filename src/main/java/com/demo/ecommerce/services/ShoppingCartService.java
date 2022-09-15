@@ -67,7 +67,7 @@ public class ShoppingCartService {
 
         ShoppingCartProxy shoppingCartProxy = new ShoppingCartProxy(shoppingCart);
 
-        shoppingCartProxy.removeShopping();
+        shoppingCartProxy.deleteShopping();
 
         this.repository.delete(shoppingCart);
 

@@ -28,14 +28,10 @@ public class ShoppingCartController {
 
 
     @Autowired
-    public ShoppingCartController(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.build();
-    }
+    public ShoppingCartController(RestTemplateBuilder restTemplateBuilder) {this.restTemplate = restTemplateBuilder.build();}
 
     @PostMapping("/create")
-    public ShoppingCart createToCart(@RequestBody ShoppingCart shoppingCart){
-        return service.createToCart(shoppingCart);
-    }
+    public ShoppingCart createToCart(@RequestBody ShoppingCart shoppingCart){return service.createToCart(shoppingCart);}
 
     @GetMapping("/all")
     public List<ShoppingCart> lstShoppingCart(){
@@ -75,8 +71,10 @@ public class ShoppingCartController {
         try {
             ResponseEntity<User> aux = restTemplate.getForEntity("/user/" + userId.toString(), User.class);
             User user = aux.getBody();
+
             ResponseEntity<ShoppingCartItem> auxShopping = restTemplate.getForEntity("/shoppingCartItem/" + shoppingCartItemId.toString(), ShoppingCartItem.class);
             ShoppingCartItem shoppingCartItem = auxShopping.getBody();
+
             return service.addProductToShoppingCart(user, shoppingCartItem, id);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -55,18 +55,20 @@ public class UserService {
         User user = this.getUserById(idUser);
         UserProxy userProxy = new UserProxy(user, shoppingCart);
 
-        userProxy.addShoppingCart(shoppingCart);
+        userProxy.addShoppingCart(user, shoppingCart);
 
         return repository.save(userProxy.getUser());
     }
 
-    public boolean deleteShoppingCartToUser(Integer idUser, ShoppingCart ShoppingCart) throws Exception {
+    public boolean removeShoppingCartToUser(Integer idUser, ShoppingCart shoppingCart) throws Exception {
         User user = this.getUserById(idUser);
-        UserProxy userProxy = new UserProxy(user, ShoppingCart);
+        UserProxy userProxy = new UserProxy(user, shoppingCart);
 
-        userProxy.removeShoppingCart(user);
+        userProxy.removeShoppingCart(user, shoppingCart);
 
-        repository.delete(user);
+        user.getShoppingCart().remove(shoppingCart);
+
+        repository.save(user);
 
         return true;
     }
