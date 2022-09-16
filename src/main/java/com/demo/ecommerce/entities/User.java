@@ -30,7 +30,7 @@ public class User {
     @Column(name = "active")
     private boolean active;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "user")
     @Column(name = "shoppingCart")
     private List<ShoppingCart> shoppingCart;
 

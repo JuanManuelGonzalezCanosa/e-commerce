@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 
-@RequestMapping("/shoppingCartItem")
+@RequestMapping("/shoppingcartitem")
 @RestController
 public class ShoppingCartItemController {
 
@@ -27,7 +27,7 @@ public class ShoppingCartItemController {
     }
 
 
-    @PostMapping("/create/idProduct/{idProduct}/quantity/{quantity}")
+    @PostMapping("/create/idproduct/{idProduct}/quantity/{quantity}")
     public ResponseEntity<?> createShoppingCartItem(@PathVariable Integer idProduct, @PathVariable Integer quantity) {
         ResponseEntity<Product> response = restTemplate.getForEntity("http://localhost:8080/product/"+ idProduct.toString(), Product.class);
 

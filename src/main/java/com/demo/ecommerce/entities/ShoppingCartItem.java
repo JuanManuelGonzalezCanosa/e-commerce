@@ -12,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "ShoppingCartItem")
+@Table(name = "shoppingcartitem")
 public class ShoppingCartItem {
 
     @Id

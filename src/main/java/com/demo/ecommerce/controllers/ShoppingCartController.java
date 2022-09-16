@@ -9,16 +9,16 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/shoppingCart")
+@RequestMapping("/shoppingcart")
 public class ShoppingCartController {
 
     private RestTemplate restTemplate;
@@ -31,7 +31,18 @@ public class ShoppingCartController {
     public ShoppingCartController(RestTemplateBuilder restTemplateBuilder) {this.restTemplate = restTemplateBuilder.build();}
 
     @PostMapping("/create")
-    public ShoppingCart createToCart(@RequestBody ShoppingCart shoppingCart){return service.createToCart(shoppingCart);}
+    public ResponseEntity<?> createToCart(@RequestBody ShoppingCart shoppingCart, @RequestHeader Integer Authorization)throws Exception{
+        try{
+            ResponseEntity<User> userAux = restTemplate.getForEntity("http://localhost:8080/user/" + Authorization.toString(), User.class);
+            User user = userAux.getBody();
+
+            return new ResponseEntity<ShoppingCart>(service.createToCart(shoppingCart, user), HttpStatus.OK);
+        }catch (Exception e){
+
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.OK);
+        }
+
+    }
 
     @GetMapping("/all")
     public List<ShoppingCart> lstShoppingCart(){
@@ -65,14 +76,14 @@ public class ShoppingCartController {
     }
 
 
-    @PostMapping("/add/{id}")
-    public ShoppingCart addProductToShoppingCart(@RequestHeader(HttpHeaders.ACCEPT_LANGUAGE) String userId, @PathVariable Integer shoppingCartItemId, @PathVariable Integer id){
+    @PostMapping("/add/shoppingcartitemid/{shoppingCartItemId}/id/{id}")
+    public ShoppingCart addProductToShoppingCart(@RequestHeader String Authorization, @PathVariable Integer shoppingCartItemId, @PathVariable Integer id){
 
         try {
-            ResponseEntity<User> aux = restTemplate.getForEntity("/user/" + userId.toString(), User.class);
+            ResponseEntity<User> aux = restTemplate.getForEntity("http://localhost:8080/user/" + Authorization.toString(), User.class);
             User user = aux.getBody();
 
-            ResponseEntity<ShoppingCartItem> auxShopping = restTemplate.getForEntity("/shoppingCartItem/" + shoppingCartItemId.toString(), ShoppingCartItem.class);
+            ResponseEntity<ShoppingCartItem> auxShopping = restTemplate.getForEntity("http://localhost:8080/shoppingcartitem/" + shoppingCartItemId.toString(), ShoppingCartItem.class);
             ShoppingCartItem shoppingCartItem = auxShopping.getBody();
 
             return service.addProductToShoppingCart(user, shoppingCartItem, id);
@@ -91,7 +102,7 @@ public class ShoppingCartController {
     }
      */
 
-    @DeleteMapping("/remove/shoppingid/{idShopoingCart}/itemid/{idOrderItem}")
+    @DeleteMapping("/remove/shoppingid/{idShopoingcart}/itemid/{idOrderItem}")
     public ShoppingCart removeShoppingCartItem(@PathVariable Integer idShopoingCart, @PathVariable Integer idOrderItem) throws Exception {
 
         restTemplate.delete("http://localhost:8080/orderitem/" + idOrderItem.toString());

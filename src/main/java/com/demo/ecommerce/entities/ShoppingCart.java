@@ -30,8 +30,9 @@ public class ShoppingCart {
     @Column(name = "status", nullable = true)
     private boolean status;
 
-    //@ManyToOne
-    //private User user;
+    @ManyToOne
+    private User user;
+
 
 
     @Override

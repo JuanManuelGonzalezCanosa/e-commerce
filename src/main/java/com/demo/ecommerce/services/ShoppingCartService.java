@@ -20,7 +20,10 @@ public class ShoppingCartService {
     private IShoppingCartRepository repository;
 
 
-    public ShoppingCart createToCart(ShoppingCart shoppingCart) {
+    public ShoppingCart createToCart(ShoppingCart shoppingCart, User user) {
+
+        shoppingCart.setUser(user);
+
         return repository.save(shoppingCart);
     }
 
