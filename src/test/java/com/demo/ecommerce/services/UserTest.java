@@ -59,13 +59,13 @@ public class UserTest {
         repositoryOrderItem.save(shoppingCartItem);
         List<ShoppingCartItem> list = new ArrayList<>();
         list.add(shoppingCartItem);
-        ShoppingCart shoppingCart = new ShoppingCart(1, list, 4500.0, true);
+        //ShoppingCart shoppingCart = new ShoppingCart(1, list, 4500.0, true);
 
         user = new User();
         user.setId(1);
         user.setName("juan");
         user.setPassword("12345");
-        user.setShoppingCart((List<ShoppingCart>) shoppingCart);
+        //user.setShoppingCart((List<ShoppingCart>) shoppingCart);
         user.setActive(true);
         user.setRol(Roles.ADMIN);
 

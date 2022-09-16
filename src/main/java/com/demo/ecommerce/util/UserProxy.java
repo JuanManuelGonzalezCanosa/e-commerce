@@ -25,6 +25,7 @@ public class UserProxy extends ShoppingCartProxy implements IUser {
             throw new Exception("Tu ROL no permite agregar un OrderItem");
         }
 
+        //USAR STREAM
         if(!user.getId().equals(super.getShoppingCart().getUser().getId())){
             throw  new Exception("ERROR: USUARIO DIFERENTE");
         }
@@ -37,6 +38,7 @@ public class UserProxy extends ShoppingCartProxy implements IUser {
         if(user.getRol().equals(Roles.GERENTE)){
             throw new Exception("Tu ROL no permite eliminar un OrderItem");
         }
+        //USAR STREAM
         if(!user.getId().equals(super.getShoppingCart().getUser().getId())){
             throw  new Exception("ERROR: USUARIO DIFERENTE");
         }
@@ -48,6 +50,7 @@ public class UserProxy extends ShoppingCartProxy implements IUser {
         if(user.getRol().equals(Roles.GERENTE)){
             throw new Exception("Tu ROL no permite eliminar un ShoppingCart");
         }
+        //USAR STREAM
         if(!user.getId().equals(super.getShoppingCart().getUser().getId())){
             throw  new Exception("ERROR: USUARIO DIFERENTE");
         }
@@ -59,6 +62,7 @@ public class UserProxy extends ShoppingCartProxy implements IUser {
         if(user.getRol().equals(Roles.GERENTE)){
             throw new Exception("Tu ROL no permite añadir un ShoppingCart al User");
         }
+        //USAR STREAM
         if(!user.getId().equals(super.getShoppingCart().getUser().getId())){
             throw  new Exception("ERROR: USUARIO DIFERENTE");
         }
@@ -72,6 +76,7 @@ public class UserProxy extends ShoppingCartProxy implements IUser {
         if(user.getRol().equals(Roles.GERENTE)){
             throw new Exception("Tu ROL no permite remover un ShoppingCart al User");
         }
+        //USAR STREAM
         if(!user.getId().equals(super.getShoppingCart().getUser().getId())){
             throw  new Exception("ERROR: USUARIO DIFERENTE");
         }

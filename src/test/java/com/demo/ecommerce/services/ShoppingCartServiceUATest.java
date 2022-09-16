@@ -51,7 +51,7 @@ public class ShoppingCartServiceUATest {
         repositoryOrderItem.save(shoppingCartItem);
         List<ShoppingCartItem> list = new ArrayList<>();
         list.add(shoppingCartItem);
-        this.shoppingCart = new ShoppingCart(1, list, 4500.0, true);
+        //this.shoppingCart = new ShoppingCart(1, list, 4500.0, true);
 
         repository.save(shoppingCart);
 
