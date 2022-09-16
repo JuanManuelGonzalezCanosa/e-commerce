@@ -3,7 +3,6 @@ package com.demo.ecommerce.services;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.entities.User;
 import com.demo.ecommerce.repository.IUserRepository;
-import com.demo.ecommerce.util.ShoppingCartProxy;
 import com.demo.ecommerce.util.UserProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

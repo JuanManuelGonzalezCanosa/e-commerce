@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/shoppingcart")
@@ -77,7 +76,7 @@ public class ShoppingCartController {
 
 
     @PostMapping("/add/shoppingcartitemid/{shoppingCartItemId}/id/{id}")
-    public ShoppingCart addProductToShoppingCart(@RequestHeader String Authorization, @PathVariable Integer shoppingCartItemId, @PathVariable Integer id){
+    public ShoppingCart addProductToShoppingCart(@RequestHeader Integer Authorization, @PathVariable Integer shoppingCartItemId, @PathVariable Integer id) {
 
         try {
             ResponseEntity<User> aux = restTemplate.getForEntity("http://localhost:8080/user/" + Authorization.toString(), User.class);

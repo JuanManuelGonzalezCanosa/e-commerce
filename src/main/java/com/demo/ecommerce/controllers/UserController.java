@@ -37,8 +37,8 @@ public class UserController {
     public List<User> lstUser(){ return service.lstUser();}
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Integer id){
-        return service.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getUserById(id));
     }
 
     @PutMapping("/put/{id}")

@@ -4,9 +4,6 @@ import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.entities.User;
 import com.demo.ecommerce.enumerados.Roles;
-import com.demo.ecommerce.exceptions.ErrorShoppingCartIsNotEnabled;
-import com.demo.ecommerce.exceptions.ErrorUserNotEnabled;
-import com.demo.ecommerce.exceptions.ListEmpty;
 
 import java.util.Optional;
 

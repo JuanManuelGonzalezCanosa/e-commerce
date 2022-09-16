@@ -1,6 +1,7 @@
 package com.demo.ecommerce.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idShoppingCart;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Column(name = "lstProduct", nullable = true)
     private List<ShoppingCartItem> lstShoppingCartItem;
 
@@ -30,9 +31,9 @@ public class ShoppingCart {
     @Column(name = "status", nullable = true)
     private boolean status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User user;
-
 
 
     @Override
