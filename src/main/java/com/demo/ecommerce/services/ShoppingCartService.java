@@ -34,6 +34,7 @@ public class ShoppingCartService {
         return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public ShoppingCart getShoppingCartById(Integer id) {
         return repository.findById(id).get();
     }
