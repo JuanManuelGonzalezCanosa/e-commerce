@@ -9,6 +9,8 @@ import com.demo.ecommerce.util.UserProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -45,6 +47,7 @@ public class ShoppingCartService {
         return true;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public ShoppingCart addProductToShoppingCart(User user, ShoppingCartItem shoppingCartItem, Integer id) throws Exception {
 
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
@@ -54,7 +57,15 @@ public class ShoppingCartService {
 
         userCartProxy.addOrderItem(shoppingCartItem);
 
-        return this.repository.save(userCartProxy.getShoppingCart());
+
+        ShoppingCart shoppingCartUpdated = this.repository.save(userCartProxy.getShoppingCart());
+
+
+        //todo descuento stock! Api call descontar Item,
+
+        return shoppingCartUpdated;
+
+
     }
 
     public ShoppingCart outProductByCarritoShopping(Integer idShopoingCart, Integer idOrderItem) throws Exception {
