@@ -1,6 +1,5 @@
 package com.demo.ecommerce.services;
 
-import com.demo.ecommerce.entities.Product;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.entities.User;
@@ -94,13 +93,15 @@ public class ShoppingCartService {
     public ShoppingCart buy(Integer idShoppingCart, RestTemplate restTemplate){
 
         ShoppingCart shoppingCart = this.getShoppingCartById(idShoppingCart);
-        shoppingCart.getLstShoppingCartItem().stream().forEach( lstShoppingCartItem -> {
-            restTemplate.put("http://localhost:8080/update-stock/" + lstShoppingCartItem.getItem().getId() + "/quantity/" + lstShoppingCartItem.getQuantity(), Boolean.class);
+        shoppingCart.setStatus(false);
+        ShoppingCart shoppingCartUpdated = repository.save(shoppingCart);
+
+        shoppingCartUpdated.getLstShoppingCartItem().forEach(lstShoppingCartItem -> {
+            restTemplate.put("http://localhost:8080/product/update-stock/" + lstShoppingCartItem.getItem().getId().toString() + "/quantity/" + lstShoppingCartItem.getQuantity(), Boolean.class);
         });
 
-        shoppingCart.setStatus(false);
 
-        return repository.save(shoppingCart);
+        return shoppingCartUpdated;
     }
 
 
