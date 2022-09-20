@@ -54,7 +54,7 @@ public class ShoppingCartItemService {
 
         ShoppingCartItem aux = this.getOrderItemById(id);
 
-        aux.setItem(shoppingCartItem.getItem());
+        aux.getItem();
         aux.setQuantity(shoppingCartItem.getQuantity());
 
         return repositoryIOrderItem.save(aux);

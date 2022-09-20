@@ -1,5 +1,6 @@
 package com.demo.ecommerce.services;
 
+import com.demo.ecommerce.entities.Product;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.entities.User;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -47,7 +49,7 @@ public class ShoppingCartService {
         return true;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     public ShoppingCart addProductToShoppingCart(User user, ShoppingCartItem shoppingCartItem, Integer id) throws Exception {
 
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
@@ -86,6 +88,19 @@ public class ShoppingCartService {
         this.repository.delete(shoppingCart);
 
         return true;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public ShoppingCart buy(Integer idShoppingCart, RestTemplate restTemplate){
+
+        ShoppingCart shoppingCart = this.getShoppingCartById(idShoppingCart);
+        shoppingCart.getLstShoppingCartItem().stream().forEach( lstShoppingCartItem -> {
+            restTemplate.put("http://localhost:8080/update-stock/" + lstShoppingCartItem.getItem().getId() + "/quantity/" + lstShoppingCartItem.getQuantity(), Boolean.class);
+        });
+
+        shoppingCart.setStatus(false);
+
+        return repository.save(shoppingCart);
     }
 
 

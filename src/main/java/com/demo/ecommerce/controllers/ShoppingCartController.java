@@ -1,6 +1,7 @@
 package com.demo.ecommerce.controllers;
 
 import com.demo.ecommerce.dto.ShoppingCartDto;
+import com.demo.ecommerce.entities.Product;
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.entities.ShoppingCartItem;
 import com.demo.ecommerce.entities.User;
@@ -107,6 +108,21 @@ public class ShoppingCartController {
         restTemplate.delete("http://localhost:8080/orderitem/" + idOrderItem.toString());
 
         return service.outProductByCarritoShopping(idShopoingCart, idOrderItem);
+    }
+
+    @PutMapping("/buy/{idShoppingCart}")
+    public ResponseEntity<?> buy(@PathVariable Integer idShoppingCart)throws Exception{
+
+        try{
+            ShoppingCart shoppingCart = service.buy(idShoppingCart, restTemplate);
+
+            return new ResponseEntity<ShoppingCart>(shoppingCart, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+
     }
 
 }
