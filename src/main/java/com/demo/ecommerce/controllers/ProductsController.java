@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/Product")
+@RequestMapping("/product")
 @RestController
 public class ProductsController {
     @Autowired
@@ -33,12 +33,18 @@ public class ProductsController {
     }
 
     @PutMapping("/put/{id}")
-    public boolean putProductById(@RequestBody Product product, @PathVariable Integer id){
+    public boolean putProductById(@RequestBody Product product, @PathVariable Integer id) {
         return service.putProductById(product, id);
     }
 
+    @PutMapping("/update-stock/{productId}/quantity/{quantity}")
+    public boolean updateStock(@PathVariable Integer productId, @PathVariable Integer quantity) {
+        return service.updateStock(productId, quantity);
+    }
+
+
     @DeleteMapping("/delete/{id}")
-    public  boolean deleteProductById(@PathVariable Integer id){
+    public boolean deleteProductById(@PathVariable Integer id) {
         return service.deleteProductById(id);
     }
 

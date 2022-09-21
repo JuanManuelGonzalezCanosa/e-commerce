@@ -27,7 +27,7 @@ public class ShoppingCartItemController {
     }
 
 
-    @PostMapping("/create/idProduct/{idProduct}/quantity/{quantity}")
+    @PostMapping("/create/idproduct/{idProduct}/quantity/{quantity}")
     public ResponseEntity<?> createShoppingCartItem(@PathVariable Integer idProduct, @PathVariable Integer quantity) {
         ResponseEntity<Product> response = restTemplate.getForEntity("http://localhost:8080/product/"+ idProduct.toString(), Product.class);
 
@@ -67,7 +67,6 @@ public class ShoppingCartItemController {
         }
     }
 
-    //HACERLO DE TIPO RESPONSE ENTITY
     @DeleteMapping("/delete/{id}")
     public boolean deleteOrderItem(@PathVariable Integer id){
 

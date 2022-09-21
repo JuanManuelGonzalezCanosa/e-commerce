@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@RequestMapping("/User")
+@RequestMapping("/user")
 @RestController
 public class UserController {
 
@@ -37,8 +37,8 @@ public class UserController {
     public List<User> lstUser(){ return service.lstUser();}
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Integer id){
-        return service.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getUserById(id));
     }
 
     @PutMapping("/put/{id}")
@@ -51,12 +51,23 @@ public class UserController {
         return service.deleteUserById(id);
     }
 
-    @PostMapping
+    @PostMapping("/addshoppingcart/iduser/{idUser}/idshoppingcart/{idShoppingCart}")
     public User userAddShoppingCart(@PathVariable Integer idUser, @PathVariable Integer idShoppingCart) throws Exception {
-        ResponseEntity<ShoppingCart> response = restTemplate.getForEntity("http://localhost:8080/shoppingCart/"+ idShoppingCart.toString(), ShoppingCart.class);
+        ResponseEntity<ShoppingCart> response = restTemplate.getForEntity("http://localhost:8080/shoppingcart/"+ idShoppingCart.toString(), ShoppingCart.class);
         ShoppingCart shoppingCart = response.getBody();
 
         return service.userAddShoppingCart(idUser, shoppingCart);
     }
+
+    @DeleteMapping("/removeshoppingcart/idUser/{idUser}/idShoppingCart/{idShoppingCart}")
+    public boolean removeShoppingCartToUser(@PathVariable Integer idUser, @PathVariable Integer idShoppingCart) throws Exception {
+        ResponseEntity<ShoppingCart> responseShopping = restTemplate.getForEntity("http://localhost:8080/" + idShoppingCart.toString(), ShoppingCart.class);
+        ShoppingCart shoppingCart = responseShopping.getBody();
+
+        service.removeShoppingCartToUser(idUser, shoppingCart);
+
+        return true;
+    }
+
 
 }

@@ -51,7 +51,7 @@ public class ShoppingCartProxy implements IShoppingCart {
         this.shoppingCart.setTotal(this.shoppingCart.getTotal() - (shoppingCartItem.getItem().getPrice() * shoppingCartItem.getQuantity()));
     }
 
-    public void removeShopping()throws Exception{
+    public void deleteShopping()throws Exception{
 
         if(!this.shoppingCart.getLstShoppingCartItem().isEmpty()){
             throw new ShoppingCartFull();

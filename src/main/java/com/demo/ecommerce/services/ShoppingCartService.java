@@ -2,11 +2,16 @@ package com.demo.ecommerce.services;
 
 import com.demo.ecommerce.entities.ShoppingCart;
 import com.demo.ecommerce.entities.ShoppingCartItem;
+import com.demo.ecommerce.entities.User;
 import com.demo.ecommerce.repository.IShoppingCartRepository;
 import com.demo.ecommerce.util.ShoppingCartProxy;
+import com.demo.ecommerce.util.UserProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -18,7 +23,10 @@ public class ShoppingCartService {
     private IShoppingCartRepository repository;
 
 
-    public ShoppingCart createToCart(ShoppingCart shoppingCart) {
+    public ShoppingCart createToCart(ShoppingCart shoppingCart, User user) {
+
+        shoppingCart.setUser(user);
+
         return repository.save(shoppingCart);
     }
 
@@ -26,6 +34,7 @@ public class ShoppingCartService {
         return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public ShoppingCart getShoppingCartById(Integer id) {
         return repository.findById(id).get();
     }
@@ -40,16 +49,25 @@ public class ShoppingCartService {
         return true;
     }
 
-    public ShoppingCart addProductToShoppingCart(ShoppingCartItem shoppingCartItem, Integer id) throws Exception {
+    @Transactional
+    public ShoppingCart addProductToShoppingCart(User user, ShoppingCartItem shoppingCartItem, Integer id) throws Exception {
 
         //CREO AUXILIARES DE CARRITO Y PRODUCTO
         ShoppingCart shoppingCart = repository.findById(id).get(); //mock
 
-        ShoppingCartProxy shoppingCartProxy = new ShoppingCartProxy(shoppingCart);
+        UserProxy userCartProxy = new UserProxy(user, shoppingCart);
 
-        shoppingCartProxy.addOrderItem(shoppingCartItem);
+        userCartProxy.addOrderItem(shoppingCartItem);
 
-        return this.repository.save(shoppingCartProxy.getShoppingCart());
+
+        ShoppingCart shoppingCartUpdated = this.repository.save(userCartProxy.getShoppingCart());
+
+
+        //todo descuento stock! Api call descontar Item,
+
+        return shoppingCartUpdated;
+
+
     }
 
     public ShoppingCart outProductByCarritoShopping(Integer idShopoingCart, Integer idOrderItem) throws Exception {
@@ -65,11 +83,26 @@ public class ShoppingCartService {
 
         ShoppingCartProxy shoppingCartProxy = new ShoppingCartProxy(shoppingCart);
 
-        shoppingCartProxy.removeShopping();
+        shoppingCartProxy.deleteShopping();
 
         this.repository.delete(shoppingCart);
 
         return true;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public ShoppingCart buy(Integer idShoppingCart, RestTemplate restTemplate){
+
+        ShoppingCart shoppingCart = this.getShoppingCartById(idShoppingCart);
+        shoppingCart.setStatus(false);
+        ShoppingCart shoppingCartUpdated = repository.save(shoppingCart);
+
+        shoppingCartUpdated.getLstShoppingCartItem().forEach(lstShoppingCartItem -> {
+            restTemplate.put("http://localhost:8080/product/update-stock/" + lstShoppingCartItem.getItem().getId().toString() + "/quantity/" + lstShoppingCartItem.getQuantity(), Boolean.class);
+        });
+
+
+        return shoppingCartUpdated;
     }
 
 

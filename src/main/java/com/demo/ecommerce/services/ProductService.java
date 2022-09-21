@@ -1,10 +1,14 @@
 package com.demo.ecommerce.services;
 
 import com.demo.ecommerce.entities.Product;
+import com.demo.ecommerce.exceptions.ProducNotFound;
+import com.demo.ecommerce.exceptions.StockEception;
 import com.demo.ecommerce.repository.IProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -39,11 +43,20 @@ public class ProductService {
         aux.setPhotoURL(product.getPhotoURL());
 
         repository.save(aux);
-        return  true;
+        return true;
     }
 
-    public boolean deleteProductById(Integer id){
+    public boolean deleteProductById(Integer id) {
         repository.deleteById(id);
+        return true;
+    }
+
+    @Transactional(propagation = Propagation.NESTED)
+    public boolean updateStock(Integer productId, Integer quantity) {
+        Product product = repository.findById(productId).orElseThrow(() -> new ProducNotFound(productId));
+        product.setStock(product.getStock() - quantity);
+        if (product.getStock() < 0) throw new StockEception();
+        repository.save(product);
         return true;
     }
 }
