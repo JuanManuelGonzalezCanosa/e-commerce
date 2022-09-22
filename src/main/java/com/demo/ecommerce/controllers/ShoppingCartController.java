@@ -39,7 +39,7 @@ public class ShoppingCartController {
             return new ResponseEntity<ShoppingCart>(service.createToCart(shoppingCart, user), HttpStatus.OK);
         }catch (Exception e){
 
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<ShoppingCart>(HttpStatus.BAD_REQUEST);
         }
 
     }
@@ -50,8 +50,12 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/{id}")
-    public ShoppingCart getShoppingCartById(@PathVariable Integer id){
-        return service.getShoppingCartById(id);
+    public ResponseEntity<?> getShoppingCartById(@PathVariable Integer id){
+        try{
+            return new ResponseEntity<ShoppingCart>(service.getShoppingCartById(id), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<ShoppingCart>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/dto/{id}")
@@ -77,7 +81,7 @@ public class ShoppingCartController {
 
 
     @PostMapping("/add/shoppingcartitemid/{shoppingCartItemId}/id/{id}")
-    public ShoppingCart addProductToShoppingCart(@RequestHeader Integer Authorization, @PathVariable Integer shoppingCartItemId, @PathVariable Integer id) {
+    public ResponseEntity<?> addProductToShoppingCart(@RequestHeader Integer Authorization, @PathVariable Integer shoppingCartItemId, @PathVariable Integer id) {
 
         try {
             ResponseEntity<User> aux = restTemplate.getForEntity("http://localhost:8080/user/" + Authorization.toString(), User.class);
@@ -86,9 +90,9 @@ public class ShoppingCartController {
             ResponseEntity<ShoppingCartItem> auxShopping = restTemplate.getForEntity("http://localhost:8080/shoppingcartitem/" + shoppingCartItemId.toString(), ShoppingCartItem.class);
             ShoppingCartItem shoppingCartItem = auxShopping.getBody();
 
-            return service.addProductToShoppingCart(user, shoppingCartItem, id);
+            return new ResponseEntity<ShoppingCart>(service.addProductToShoppingCart(user, shoppingCartItem, id), HttpStatus.OK);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<ShoppingCart>(HttpStatus.BAD_REQUEST);
         }
 
 
@@ -103,11 +107,17 @@ public class ShoppingCartController {
      */
 
     @DeleteMapping("/remove/shoppingid/{idShopoingcart}/itemid/{idOrderItem}")
-    public ShoppingCart removeShoppingCartItem(@PathVariable Integer idShopoingCart, @PathVariable Integer idOrderItem) throws Exception {
+    public ResponseEntity<?> removeShoppingCartItem(@PathVariable Integer idShopoingCart, @PathVariable Integer idOrderItem) throws Exception {
 
-        restTemplate.delete("http://localhost:8080/orderitem/" + idOrderItem.toString());
+        try{
+            restTemplate.delete("http://localhost:8080/orderitem/" + idOrderItem.toString());
 
-        return service.outProductByCarritoShopping(idShopoingCart, idOrderItem);
+            return new ResponseEntity<ShoppingCart>(service.outProductByCarritoShopping(idShopoingCart, idOrderItem), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<ShoppingCart>(HttpStatus.BAD_REQUEST);
+        }
+
+
     }
 
     @PutMapping("/buy/{idShoppingCart}")

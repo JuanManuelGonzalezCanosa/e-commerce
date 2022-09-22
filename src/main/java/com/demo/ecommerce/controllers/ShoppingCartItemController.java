@@ -49,6 +49,8 @@ public class ShoppingCartItemController {
         }
     }
 
+
+    //PREGUNTAR COMO ES EN ESTOS CASOS
     @GetMapping("/{id}")
     public ShoppingCartItem orderItemId(@PathVariable Integer id){
         try {

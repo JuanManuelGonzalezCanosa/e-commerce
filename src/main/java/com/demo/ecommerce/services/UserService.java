@@ -29,7 +29,7 @@ public class UserService {
     }
 
 
-    public boolean putUserById(User user, Integer id) {
+    public User putUserById(User user, Integer id) {
 
         User aux = this.getUserById(id);
 
@@ -39,8 +39,7 @@ public class UserService {
         aux.setShoppingCart(user.getShoppingCart());
         aux.setActive(user.isActive());
 
-        repository.save(aux);
-        return  true;
+        return repository.save(aux);
     }
 
     public boolean deleteUserById(Integer id){

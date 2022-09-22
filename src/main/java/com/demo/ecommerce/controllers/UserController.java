@@ -38,35 +38,52 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.getUserById(id));
+        try{
+            return ResponseEntity.ok(service.getUserById(id));
+        }catch (Exception e){
+            return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/put/{id}")
-    public boolean putUserById(@RequestBody User user, @PathVariable Integer id){
-        return service.putUserById(user, id);
+    public ResponseEntity<?> putUserById(@RequestBody User user, @PathVariable Integer id){
+        try {
+            return new ResponseEntity<User>(service.putUserById(user, id), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean deteleUserById(@PathVariable Integer id){
-        return service.deleteUserById(id);
+    public ResponseEntity<?> deteleUserById(@PathVariable Integer id){
+        try {
+            return new ResponseEntity<>(service.deleteUserById(id), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/addshoppingcart/iduser/{idUser}/idshoppingcart/{idShoppingCart}")
-    public User userAddShoppingCart(@PathVariable Integer idUser, @PathVariable Integer idShoppingCart) throws Exception {
-        ResponseEntity<ShoppingCart> response = restTemplate.getForEntity("http://localhost:8080/shoppingcart/"+ idShoppingCart.toString(), ShoppingCart.class);
-        ShoppingCart shoppingCart = response.getBody();
+    public ResponseEntity<?> userAddShoppingCart(@PathVariable Integer idUser, @PathVariable Integer idShoppingCart) throws Exception {
+        try {
+            ResponseEntity<ShoppingCart> response = restTemplate.getForEntity("http://localhost:8080/shoppingcart/"+ idShoppingCart.toString(), ShoppingCart.class);
+            ShoppingCart shoppingCart = response.getBody();
+            return new ResponseEntity<User>(service.userAddShoppingCart(idUser, shoppingCart), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+        }
 
-        return service.userAddShoppingCart(idUser, shoppingCart);
     }
 
     @DeleteMapping("/removeshoppingcart/idUser/{idUser}/idShoppingCart/{idShoppingCart}")
-    public boolean removeShoppingCartToUser(@PathVariable Integer idUser, @PathVariable Integer idShoppingCart) throws Exception {
-        ResponseEntity<ShoppingCart> responseShopping = restTemplate.getForEntity("http://localhost:8080/" + idShoppingCart.toString(), ShoppingCart.class);
-        ShoppingCart shoppingCart = responseShopping.getBody();
-
-        service.removeShoppingCartToUser(idUser, shoppingCart);
-
-        return true;
+    public ResponseEntity<?> removeShoppingCartToUser(@PathVariable Integer idUser, @PathVariable Integer idShoppingCart) throws Exception {
+        try{
+            ResponseEntity<ShoppingCart> responseShopping = restTemplate.getForEntity("http://localhost:8080/" + idShoppingCart.toString(), ShoppingCart.class);
+            ShoppingCart shoppingCart = responseShopping.getBody();
+            return new ResponseEntity<>(service.removeShoppingCartToUser(idUser, shoppingCart), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 

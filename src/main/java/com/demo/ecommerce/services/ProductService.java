@@ -30,7 +30,7 @@ public class ProductService {
     }
 
 
-    public boolean putProductById(Product product, Integer id) {
+    public Product putProductById(Product product, Integer id) {
 
         Product aux = this.getProductById(id);
 
@@ -42,8 +42,7 @@ public class ProductService {
         aux.setPrice(product.getPrice());
         aux.setPhotoURL(product.getPhotoURL());
 
-        repository.save(aux);
-        return true;
+        return repository.save(aux);
     }
 
     public boolean deleteProductById(Integer id) {
@@ -52,11 +51,12 @@ public class ProductService {
     }
 
     @Transactional(propagation = Propagation.NESTED)
-    public boolean updateStock(Integer productId, Integer quantity) {
+    public Product updateStock(Integer productId, Integer quantity) {
         Product product = repository.findById(productId).orElseThrow(() -> new ProducNotFound(productId));
         product.setStock(product.getStock() - quantity);
         if (product.getStock() < 0) throw new StockEception();
         repository.save(product);
-        return true;
+
+        return product;
     }
 }
